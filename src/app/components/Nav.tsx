@@ -9,7 +9,7 @@ export const Nav =(): JSX.Element => {
     const [currentTab, setCurrentTab] = useState<TabName>('About');
     return (
         <div className={clsx('flex flex-col w-full h-full')}>
-            <NavRail setCurrentTab={setCurrentTab} />
+            <NavRail currentTab={currentTab} setCurrentTab={setCurrentTab} />
             <NavContent currentTab={currentTab} />
         </div>
     )
