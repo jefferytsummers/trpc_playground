@@ -1,17 +1,16 @@
 import React, { Suspense } from 'react';
-import { trpc } from '../utils/trpc';
 import RootLayout from './layout';
+import { NavContent } from './components/NavContent';
+import { Footer } from './components/Footer';
 
 
 const IndexPage = (): JSX.Element => {
-  // const hello = trpc.hello.useQuery({ text: 'client' });
-  // const createUserMutation = trpc.createUser.useMutation()
-  // const handleCreateUser = async () => {
-  //   createUserMutation.mutate({ name: 'James F. Reale'})
-  // }
-
   return (
-    <div>
+    <div className={"flex w-full h-full justify-center items-start border border-red-600"}>
+      {/* Nav tabs and current tab content */}
+      <NavContent />
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }
