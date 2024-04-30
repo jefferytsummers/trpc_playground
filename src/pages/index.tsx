@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { trpc } from '../utils/trpc';
+import RootLayout from './layout';
 
-export default function IndexPage() {
+const IndexPage = (): JSX.Element => {
   const hello = trpc.hello.useQuery({ text: 'client' });
   const createUserMutation = trpc.createUser.useMutation()
   if (!hello.data) {
@@ -13,9 +14,15 @@ export default function IndexPage() {
 
   return (
     <div>
-      <p>{hello.data.greeting}</p>
-      <button onClick={handleCreateUser}>Create user</button>
-      {createUserMutation.isPending && (<>CREATING USER</>)}
+        <Suspense fallback={<div>Loading...</div>} >
+            <p>{hello.data.greeting}</p>
+            <button onClick={handleCreateUser}>Create user</button>
+            {createUserMutation.isPending && (<>CREATING USER</>)}
+        </Suspense>
     </div>
   );
 }
+
+IndexPage.getLayout = (page: JSX.Element) => <RootLayout><Suspense fallback={<div>Loading...</div>}>{page}</Suspense></RootLayout>
+
+export default IndexPage;
