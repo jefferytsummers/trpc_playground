@@ -1,28 +1,27 @@
 import { z } from 'zod';
-import { db } from '../db'
 import { procedure, router } from '../trpc';
 
 export const appRouter = router({
-  hello: procedure
-    .input(
-      z.object({
-        text: z.string(),
-      }),
-    )
-    .query((opts) => {
-      return {
-        greeting: `hello ${opts.input.text}`,
-      };
-    }),
+    hello: procedure
+        .input(
+            z.object({
+                text: z.string(),
+            }),
+        )
+        .query((opts) => {
+            console.log('Should be getting here...')
+            return {
+                greeting: `hello ${opts.input.text}`,
+            };
+        }),
     createUser: procedure
-    .input(z.object({
-        name: z.string(),
+        .input(z.object({
+            name: z.string(),
         })
-    )
-    .mutation(async (opts) => {
-        const { input: { name } } = opts;
-        return await db.user.createUser(name);
-    })
+        )
+        .mutation(async ({ ctx, input: { name }, }) => {
+            return await ctx.prisma.user.create({ data: { name: name, email: 'test@email.com' } })
+        })
 });
 
 // export type definition of API

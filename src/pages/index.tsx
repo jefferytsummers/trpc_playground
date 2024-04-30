@@ -9,8 +9,8 @@ export default function IndexPage() {
   }
   const handleCreateUser = async () => {
     createUserMutation.mutate({ name: 'James F. Reale'})
-
   }
+
   return (
     <div>
       <p>{hello.data.greeting}</p>
