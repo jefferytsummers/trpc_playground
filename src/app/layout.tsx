@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={clsx([inter.className, "h-screen w-screen text-neutral-content bg-neutral"])}>{children}</body>
+      <body className={clsx([inter.className, "overflow-y-auto w-screen text-neutral-content bg-neutral"])}>{children}</body>
     </html>
   );
 }

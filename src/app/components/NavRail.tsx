@@ -12,7 +12,7 @@ const NavTab = ({ checked, label, setCurrentTab }: { checked: boolean, label: Ta
 
 export const NavRail = ({ currentTab, setCurrentTab }: { currentTab: TabName, setCurrentTab: (tabName: TabName) => void }): JSX.Element => {
     return (
-        <div role="tablist" className="mx-auto my-4 tabs tabs-bordered sm:tabs-lg">
+        <div role="tablist" className="w-1/2 mx-auto my-4 tabs tabs-bordered sm:tabs-lg">
             {tabNames.map((tabName) => (<NavTab label={tabName} setCurrentTab={setCurrentTab} checked={tabName === currentTab}/>))}
         </div>
     )

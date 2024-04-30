@@ -5,15 +5,20 @@ import { Nav } from './components/Nav';
 
 const IndexPage = (): JSX.Element => {
   return (
-    <div className={"flex flex-col w-full h-full border border-red-600 justify-start items-center"}>
+    <div className={"flex w-full justify-start min-h-screen overflow-y-auto"}>
       {/* Nav tabs and current tab content */}
       <Nav />
       {/* Footer */}
-      <Footer />
     </div>
   );
 }
 
-IndexPage.getLayout = (page: JSX.Element) => <RootLayout><Suspense fallback={<div>Loading...</div>}>{page}</Suspense></RootLayout>
+IndexPage.getLayout = (page: JSX.Element) => (
+  <RootLayout>
+    <Suspense fallback={<div>Loading...</div>}>
+      {page}
+    </Suspense>
+  </RootLayout>
+);
 
 export default IndexPage;
