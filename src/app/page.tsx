@@ -1,14 +1,13 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
 import RootLayout from './layout';
-import { NavContent } from './components/NavContent';
 import { Footer } from './components/Footer';
-
+import { Nav } from './components/Nav';
 
 const IndexPage = (): JSX.Element => {
   return (
-    <div className={"flex w-full h-full justify-center items-start border border-red-600"}>
+    <div className={"flex flex-col w-full h-full border border-red-600 justify-start items-center"}>
       {/* Nav tabs and current tab content */}
-      <NavContent />
+      <Nav />
       {/* Footer */}
       <Footer />
     </div>
