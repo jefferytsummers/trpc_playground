@@ -2,8 +2,14 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import clsx from 'clsx';
 import React from "react";
+import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: 'Save the date!',
+  description: 'Interactive itineraries!',
+}
 
 export default function RootLayout({
   children,
@@ -12,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={clsx([inter.className, "m-auto border border-red-600"])}>{children}</body>
+      <body className={clsx([inter.className, "h-screen w-screen"])}>{children}</body>
     </html>
   );
 }

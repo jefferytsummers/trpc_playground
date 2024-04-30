@@ -15,5 +15,4 @@ function MyApp({ Component, pageProps }: CustomAppProps) {
   return getLayout(<Component {...pageProps} />);
 }
 
-
 export default trpc.withTRPC(MyApp);
