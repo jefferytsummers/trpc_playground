@@ -4,6 +4,8 @@ import { TextInput } from "../form/TextInput";
 import { PasswordInput } from "../form/PasswordInput";
 import { z } from "zod";
 import { SocialButtons } from "../common/SocialButtons";
+import { useZodForm } from "@/utils/forms";
+
 
 const registrationFormSchema = z
   .object({
@@ -25,17 +27,21 @@ const registrationFormSchema = z
         path: ["confirmPassword"],
       });
     }
-    return password === confirmPassword;
   });
 
-type RegistrationForm = z.infer<typeof registrationFormSchema>;
+type Registration = z.infer<typeof registrationFormSchema>;
+const initialRegistration: Registration = { username: '', password: '', confirmPassword: ''}
 
 export const RegistrationForm = (): JSX.Element => {
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<RegistrationForm>();
+  } = useZodForm({
+    schema: registrationFormSchema,
+    defaultValues: { username: '', password: '', confirmPassword: '' },
+});
+  console.log({ errors })
   return (
     <div className={clsx("bg-base-100 rounded-lg drop-shadow-lg w-full p-4")}>
       <form
@@ -45,22 +51,22 @@ export const RegistrationForm = (): JSX.Element => {
       >
         <>
           <TextInput
-            errorMessage=""
+            errorMessage={errors.username?.message}
             topLeftLabel="Username"
             placeholder="Email address or phone number"
             inputProps={register("username", { required: true })}
           />
           <PasswordInput
-            errorMessage=""
+            errorMessage={errors.password?.message}
             topLeftLabel="Password"
             placeholder="*******"
             inputProps={register("password", { required: true })}
           />
           <PasswordInput
-            errorMessage=""
+            errorMessage={errors.confirmPassword?.message}
             topLeftLabel="Confirm Password"
             placeholder="*******"
-            inputProps={register("password", { required: true })}
+            inputProps={register("confirmPassword", { required: true })}
           />
         </>
         <div
@@ -68,7 +74,7 @@ export const RegistrationForm = (): JSX.Element => {
             "flex flex-col gap-4 mx-16 justify-center items-center",
           )}
         >
-          <button className={clsx("btn btn-primary ")}>
+          <button type="submit" className={clsx("btn btn-primary ")}>
             Register and view!
           </button>
           <div className={clsx("text-lg")}>or register with</div>

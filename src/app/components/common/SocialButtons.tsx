@@ -1,5 +1,9 @@
 import clsx from "clsx";
 
+import SheetsLogo from '../../../../public/Google_Sheets_logo.svg';
+import FormsLogo from '../../../../public/Google_Forms_logo.svg';
+import DocsLogo from '../../../../public/Google_Docs_logo.svg';
+
 type PlatformIcons =
     | "Facebook"
     | "YouTube"
@@ -48,12 +52,7 @@ const GoogleDocsIcon = (): JSX.Element => (
         data-twe-ripple-color="light"
         className="flex justify-center items-center rounded-lg h-full w-full drop-shadow-lg transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
     >
-        <span className="[&>svg]:h-10 [&>svg]:w-10 [&>svg]:fill-[#ea4335]">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
-                <path
-                    d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z" />
-            </svg>
-        </span>
+        <DocsLogo />
     </button>
 )
 
@@ -64,12 +63,7 @@ const GoogleSheetsIcon = (): JSX.Element => (
         data-twe-ripple-color="light"
         className="flex justify-center items-center rounded-lg h-full w-full drop-shadow-lg transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
     >
-        <span className="[&>svg]:h-10 [&>svg]:w-10 [&>svg]:fill-[#ea4335]">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
-                <path
-                    d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z" />
-            </svg>
-        </span>
+        <SheetsLogo />
     </button>
 )
 
@@ -80,12 +74,7 @@ const GoogleFormsIcon = (): JSX.Element => (
         data-twe-ripple-color="light"
         className="flex justify-center items-center rounded-lg h-full w-full drop-shadow-lg transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
     >
-        <span className="[&>svg]:h-10 [&>svg]:w-10 [&>svg]:fill-[#ea4335]">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
-                <path
-                    d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z" />
-            </svg>
-        </span>
+        <FormsLogo />
     </button>
 )
 
@@ -164,6 +153,7 @@ export const SocialButtons = ({
         <div className={clsx("h-16 flex justify-center items-center gap-2")}>
             {include.map((icon) => (
                 <div
+                    key={icon}
                     className={clsx(
                         'flex justify-center items-center rounded-lg h-full w-16 flex',
                         {
