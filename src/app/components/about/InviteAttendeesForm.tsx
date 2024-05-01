@@ -1,19 +1,9 @@
 "use client";
 import clsx from "clsx";
-import {
-  useForm,
-  SubmitHandler,
-  useFieldArray,
-  UseFormProps,
-} from "react-hook-form";
+import { useForm, useFieldArray, UseFormProps } from "react-hook-form";
 import { TextInput } from "../form/TextInput";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z, ZodType } from "zod";
-
-interface IInviteAttendeesFormInput {
-  name: string;
-  contactInfo: string;
-}
+import { z } from "zod";
 
 const inviteAttendeesSchema = z.object({
   attendees: z.array(
