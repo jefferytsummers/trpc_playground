@@ -1,6 +1,6 @@
 import clsx from 'clsx';
-import { TabName } from '../types';
-import { About } from './About';
+import { TabName } from '../../types';
+import { About } from '../about/About';
 
 export const NavContent = ({ currentTab }: { currentTab: TabName }): JSX.Element => {
     return (

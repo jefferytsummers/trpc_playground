@@ -9,7 +9,6 @@ export const appRouter = router({
             }),
         )
         .query((opts) => {
-            console.log('Should be getting here...')
             return {
                 greeting: `hello ${opts.input.text}`,
             };

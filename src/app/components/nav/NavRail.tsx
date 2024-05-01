@@ -1,4 +1,4 @@
-import { TabName } from '../types';
+import { TabName } from '../../types';
 
 const tabNames: TabName[] = ['about', 'login', 'pricing'];
 

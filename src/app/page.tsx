@@ -1,7 +1,6 @@
 import React, { Suspense, useState } from 'react';
 import RootLayout from './layout';
-import { Footer } from './components/Footer';
-import { Nav } from './components/Nav';
+import { Nav } from './components/nav/Nav';
 
 const IndexPage = (): JSX.Element => {
   return (

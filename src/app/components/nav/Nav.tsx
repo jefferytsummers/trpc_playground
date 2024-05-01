@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { useState } from "react";
 import { NavContent } from "./NavContent";
 import { NavRail } from "./NavRail";
-import { TabName } from "../types";
+import { TabName } from "../../types";
 
 export const Nav =(): JSX.Element => {
     const [currentTab, setCurrentTab] = useState<TabName>('about');
