@@ -5,13 +5,13 @@ import { About } from './About';
 export const NavContent = ({ currentTab }: { currentTab: TabName }): JSX.Element => {
     return (
         <div className={clsx('flex my-4 justify-center items-center')}>
-            {currentTab === 'About' && (
+            {currentTab === 'about' && (
                 <About />
             )}
-            {currentTab === 'Login' && (
+            {currentTab === 'login' && (
                 <div>{currentTab}</div>
             )}
-            {currentTab === 'Pricing' && (
+            {currentTab === 'pricing' && (
                 <div>{currentTab}</div>
             )}
         </div>

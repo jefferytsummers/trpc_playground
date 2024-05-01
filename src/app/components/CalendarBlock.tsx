@@ -6,7 +6,7 @@ export const CalendarBlock = ({ className = '', selected = false, setSelectedDat
     return (
         <div
             className={clsx(
-                `flex justify-center items-center sm:text-xl hover:cursor-pointer hover:bg-primary hover:text-primary-content rounded-lg ${className}`,
+                `flex justify-center items-center text-lg sm:text-xl hover:cursor-pointer hover:bg-primary hover:text-primary-content rounded-lg ${className}`,
                 selected && 'bg-primary text-primary-content'
             )}
             onClick={() => setSelectedDate?.(+value)}

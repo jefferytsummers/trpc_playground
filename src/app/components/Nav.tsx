@@ -6,7 +6,7 @@ import { NavRail } from "./NavRail";
 import { TabName } from "../types";
 
 export const Nav =(): JSX.Element => {
-    const [currentTab, setCurrentTab] = useState<TabName>('About');
+    const [currentTab, setCurrentTab] = useState<TabName>('about');
     return (
         <div className={clsx('w-screen')}>
             <NavRail currentTab={currentTab} setCurrentTab={setCurrentTab} />
