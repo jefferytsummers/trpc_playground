@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import clsx from 'clsx';
+import clsx from "clsx";
 import React from "react";
-import "./globals.css"
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Save the date!',
-  description: 'Interactive itineraries!',
-}
+  title: "Save the date!",
+  description: "Interactive itineraries!",
+};
 
 export default function RootLayout({
   children,
@@ -18,7 +18,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={clsx([inter.className, "overflow-y-auto w-screen text-neutral-content bg-neutral"])}>{children}</body>
+      <body
+        className={clsx([
+          inter.className,
+          "overflow-y-auto w-screen text-neutral-content bg-neutral",
+        ])}
+      >
+        {children}
+      </body>
     </html>
   );
 }

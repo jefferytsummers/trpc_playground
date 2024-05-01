@@ -1,12 +1,12 @@
-import { AppRouter } from '@/server/routers/_app';
-import { httpBatchLink } from '@trpc/client';
-import { createTRPCNext } from '@trpc/next';
-import { ssrPrepass } from '@trpc/next/ssrPrepass';
+import { AppRouter } from "@/server/routers/_app";
+import { httpBatchLink } from "@trpc/client";
+import { createTRPCNext } from "@trpc/next";
+import { ssrPrepass } from "@trpc/next/ssrPrepass";
 
 function getBaseUrl() {
-  if (typeof window !== 'undefined')
+  if (typeof window !== "undefined")
     // browser should use relative path
-    return '';
+    return "";
 
   if (process.env.VERCEL_URL)
     // reference for vercel.com
@@ -25,12 +25,12 @@ export const trpc = createTRPCNext<AppRouter>({
   ssrPrepass,
   config(opts) {
     const { ctx } = opts;
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       // during client requests
       return {
         links: [
           httpBatchLink({
-            url: '/api/trpc',
+            url: "/api/trpc",
           }),
         ],
       };

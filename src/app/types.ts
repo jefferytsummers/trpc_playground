@@ -1,1 +1,1 @@
-export type TabName = 'about' | 'login' | 'pricing';
+export type TabName = "about" | "login" | "pricing";
