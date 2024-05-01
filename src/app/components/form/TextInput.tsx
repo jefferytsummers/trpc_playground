@@ -23,7 +23,7 @@ export const TextInput = ({
                 <span className="label-text">{topLeftLabel}</span>
                 <span className="label-text-alt">{topRightLabel}</span>
             </div>
-            <input type="text" placeholder={placeholder} className="input input-bordered w-full" {...inputProps} />
+            <input type="text" placeholder={placeholder} className="input input-bordered w-full placeholder-base-content placeholder-opacity-50" {...inputProps} />
             <div className="label">
                 {errorMessage && (<span className="label-text-alt text-secondary">{errorMessage}</span>)}
                 <span className="label-text-alt">{bottomRightLabel}</span>

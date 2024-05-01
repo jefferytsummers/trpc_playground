@@ -71,11 +71,11 @@ export const InviteAttendeesForm = (): JSX.Element => {
                         return (
                             <li className={clsx('flex flex-col')} key={index}>
                                 <div className={clsx('flex justify-between')}>
-                                    <label className={clsx('text-accent text-xl')}>{`Attendee ${index + 1}`}</label>
+                                    <label className={clsx('text-primary text-xl')}>{`Attendee ${index + 1}`}</label>
                                     <div className={clsx('flex flex-col justify-end')}>
                                         <button type="button"
                                             className={clsx(
-                                                'btn btn-sm btn-primary text-xl text-center text-primary-content', {
+                                                'btn btn-sm btn-secondary text-xl text-center text-primary-content', {
                                                     'invisible': index === 0,
                                                 })}
                                             onClick={() => {

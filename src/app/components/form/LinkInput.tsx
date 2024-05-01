@@ -19,7 +19,7 @@ export const LinkInput = ({
                 <span className="label-text">{topLeftLabel}</span>
                 <span className="label-text-alt">{topRightLabel}</span>
             </div>
-            <input type="text" placeholder={placeholder} className="input input-bordered w-full max-w-xs" {...inputProps} />
+            <input type="text" placeholder={placeholder} className="input input-bordered w-full placeholder-base-content placeholder-opacity-50" {...inputProps} />
             <div className="label">
                 <span className="label-text-alt">{bottomLeftLabel}</span>
                 <span className="label-text-alt">{bottomRightLabel}</span>
