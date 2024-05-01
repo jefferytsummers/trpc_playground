@@ -8,9 +8,6 @@ export const NavContent = ({ currentTab }: { currentTab: TabName }): JSX.Element
             {currentTab === 'About' && (
                 <About />
             )}
-            {currentTab === 'Get Started' && (
-                <div>{currentTab}</div>
-            )}
             {currentTab === 'Login' && (
                 <div>{currentTab}</div>
             )}

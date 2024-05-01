@@ -8,7 +8,7 @@ import { TabName } from "../types";
 export const Nav =(): JSX.Element => {
     const [currentTab, setCurrentTab] = useState<TabName>('About');
     return (
-        <div className={clsx('w-full')}>
+        <div className={clsx('w-screen')}>
             <NavRail currentTab={currentTab} setCurrentTab={setCurrentTab} />
             <NavContent currentTab={currentTab} />
         </div>
