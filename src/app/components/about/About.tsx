@@ -16,9 +16,6 @@ export const About = (): JSX.Element => {
           <AddEventSteps />
           <InviteAttendeesStep />
           <RegisterAndGenerateStep />
-          <button className="btn w-56 h-20 text-2xl text-primary-content btn-primary">
-            Try it out!
-          </button>
         </div>
       </div>
     </div>

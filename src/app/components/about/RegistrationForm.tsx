@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { TextInput } from "../form/TextInput";
 import { PasswordInput } from "../form/PasswordInput";
 import { z } from "zod";
+import { SocialButtons } from "../common/SocialButtons";
 
 const registrationFormSchema = z
   .object({
@@ -42,27 +43,37 @@ export const RegistrationForm = (): JSX.Element => {
           console.log(data);
         })}
       >
-        <TextInput
-          errorMessage=""
-          topLeftLabel="Username"
-          placeholder="Email address or phone number"
-          inputProps={register("username", { required: true })}
-        />
-        <PasswordInput
-          errorMessage=""
-          topLeftLabel="Password"
-          placeholder="*******"
-          inputProps={register("password", { required: true })}
-        />
-        <PasswordInput
-          errorMessage=""
-          topLeftLabel="Confirm Password"
-          placeholder="*******"
-          inputProps={register("password", { required: true })}
-        />
-        <button className={clsx("btn btn-primary ")}>Register and view!</button>
-        <div>or login with</div>
-        <div>LOGIN_LOGOS</div>
+        <>
+          <TextInput
+            errorMessage=""
+            topLeftLabel="Username"
+            placeholder="Email address or phone number"
+            inputProps={register("username", { required: true })}
+          />
+          <PasswordInput
+            errorMessage=""
+            topLeftLabel="Password"
+            placeholder="*******"
+            inputProps={register("password", { required: true })}
+          />
+          <PasswordInput
+            errorMessage=""
+            topLeftLabel="Confirm Password"
+            placeholder="*******"
+            inputProps={register("password", { required: true })}
+          />
+        </>
+        <div
+          className={clsx(
+            "flex flex-col gap-4 mx-16 justify-center items-center",
+          )}
+        >
+          <button className={clsx("btn btn-primary ")}>
+            Register and view!
+          </button>
+          <div className={clsx("text-lg")}>or register with</div>
+          <SocialButtons include={['Google', 'Facebook', 'Twitter']} />
+        </div>
       </form>
     </div>
   );
