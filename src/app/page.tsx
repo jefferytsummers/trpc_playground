@@ -1,6 +1,6 @@
-import React, { Suspense, useState } from 'react';
-import RootLayout from './layout';
-import { Nav } from './components/nav/Nav';
+import React, { Suspense, useState } from "react";
+import RootLayout from "./layout";
+import { Nav } from "./components/nav/Nav";
 
 const IndexPage = (): JSX.Element => {
   return (
@@ -10,13 +10,11 @@ const IndexPage = (): JSX.Element => {
       {/* Footer */}
     </div>
   );
-}
+};
 
 IndexPage.getLayout = (page: JSX.Element) => (
   <RootLayout>
-    <Suspense fallback={<div>Loading...</div>}>
-      {page}
-    </Suspense>
+    <Suspense fallback={<div>Loading...</div>}>{page}</Suspense>
   </RootLayout>
 );
 

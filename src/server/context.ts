@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client';
-import { CreateNextContextOptions } from '@trpc/server/adapters/next';
+import { PrismaClient } from "@prisma/client";
+import { CreateNextContextOptions } from "@trpc/server/adapters/next";
 
 export async function createContext(opts: CreateNextContextOptions) {
   const { req, res } = opts;
@@ -11,5 +11,4 @@ export async function createContext(opts: CreateNextContextOptions) {
   };
 }
 
-export type Context = Awaited<ReturnType<typeof createContext>>
-
+export type Context = Awaited<ReturnType<typeof createContext>>;

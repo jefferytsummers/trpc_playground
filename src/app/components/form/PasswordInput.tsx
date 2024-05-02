@@ -1,12 +1,15 @@
-export const LinkInput = ({
-  bottomLeftLabel = undefined,
+import clsx from "clsx";
+
+export const PasswordInput = ({
+  className = undefined,
   bottomRightLabel = undefined,
   topLeftLabel = undefined,
   topRightLabel = undefined,
   placeholder = undefined,
   inputProps = {},
+  errorMessage,
 }: {
-  bottomLeftLabel?: string | undefined;
+  className?: string | undefined;
   bottomRightLabel?: string | undefined;
   topLeftLabel?: string | undefined;
   topRightLabel?: string | undefined;
@@ -15,21 +18,24 @@ export const LinkInput = ({
     React.InputHTMLAttributes<HTMLInputElement>,
     HTMLInputElement
   >;
+  errorMessage: string | undefined;
 }): JSX.Element => {
   return (
-    <label className="form-control w-full max-w-xs">
+    <label className={clsx(`form-control w-full ${className}`)}>
       <div className="label">
         <span className="label-text">{topLeftLabel}</span>
         <span className="label-text-alt">{topRightLabel}</span>
       </div>
       <input
-        type="text"
+        type="password"
         placeholder={placeholder}
         className="input input-bordered w-full placeholder-base-content placeholder-opacity-50"
         {...inputProps}
       />
       <div className="label">
-        <span className="label-text-alt">{bottomLeftLabel}</span>
+        {errorMessage && (
+          <span className="label-text-alt text-secondary">{`* ${errorMessage}`}</span>
+        )}
         <span className="label-text-alt">{bottomRightLabel}</span>
       </div>
     </label>
