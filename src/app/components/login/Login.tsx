@@ -7,13 +7,7 @@ export const Login = (): JSX.Element => {
       className={clsx("flex flex-col gap-8 w-full justify-center items-center")}
     >
       <div className={clsx("text-3xl")}>Login</div>
-      <div
-        className={clsx(
-          "max-w-sm sm:max-w-md w-full h-72 bg-base-100 rounded-lg text-primary",
-        )}
-      >
-        <LoginForm />
-      </div>
+      <LoginForm />
     </div>
   );
 };

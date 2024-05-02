@@ -5,8 +5,9 @@ import { z } from "zod";
 import { PlatformIcon, SocialButtons } from "../../common/SocialButtons";
 import { useZodForm } from "@/utils/forms";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../../../firebase";
+import { auth, facebookProvider, googleProvider, twitterProvider } from "../../../../firebase";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { useRouter } from "next/navigation";
 
 const registrationFormSchema = z
   .object({
@@ -46,20 +47,29 @@ export const RegistrationForm = (): JSX.Element => {
     schema: registrationFormSchema,
     defaultValues: { username: "", password: "", confirmPassword: "" },
   });
-  console.log({ errors });
+
+  const router = useRouter();
+
   return (
-    <div className={clsx("bg-base-100 rounded-lg drop-shadow-lg w-full p-4")}>
+    <div className={clsx("flex justify-center items-center bg-base-100 rounded-lg drop-shadow-lg p-4")}>
       <form
         onSubmit={handleSubmit(async ({ username, password }) => {
-          const { user } = await createUserWithEmailAndPassword(
-            auth,
-            username,
-            password,
-          );
-          console.log(user);
-        })}
+          try {
+            const { user } = await createUserWithEmailAndPassword(
+              auth,
+              username,
+              password,
+            );
+            console.log(user);
+            // Generate itinerary and navigate to home page
+            router.push('registered')
+          } catch (error) {
+
+          }
+        })
+      }
       >
-        <>
+        <div className={clsx('flex flex-col max-w-sm mx-auto')}>
           <TextInput
             errorMessage={errors.username?.message}
             topLeftLabel="Username:"
@@ -78,7 +88,7 @@ export const RegistrationForm = (): JSX.Element => {
             placeholder="*******"
             inputProps={register("confirmPassword", { required: true })}
           />
-        </>
+        </div>
         <div
           className={clsx(
             "flex flex-col gap-4 mx-16 justify-center items-center",
@@ -90,20 +100,37 @@ export const RegistrationForm = (): JSX.Element => {
           <div className={clsx("text-lg")}>or register with</div>
           <div
             className={clsx(
-              "flex justify-center items-center rounded-lg h-full w-full flex",
+              "flex justify-center items-center rounded-lg h-full w-full flex pb-2 h-full",
             )}
           >
-            <div className={"rounded-lg hover:ring hover:ring-primary hover:bg-inherit"}>
+            <div className={"rounded-lg hover:ring hover:ring-primary pt-2"} onClick={async () => {
+              const auth = getAuth();
+              const { user } = await signInWithPopup(auth, googleProvider);
+              console.log({ user })
+              // Generate itinerary and navigate to home page
+              router.push('app')
+            }}>
               <PlatformIcon icon={"Google"} />
             </div>
-            <div className={"rounded-lg hover:ring hover:ring-primary"}>
+            <div className={"rounded-lg hover:ring hover:ring-primary pt-2"} onClick={async () => {
+              const auth = getAuth();
+              const { user } = await signInWithPopup(auth, facebookProvider);
+              console.log({ user })
+              // Generate itinerary and navigate to home page
+              router.push('app')
+            }}>
               <PlatformIcon icon={"Facebook"} />
             </div>
-            <div className={"rounded-lg hover:ring hover:ring-primary"}>
+            <div className={"rounded-lg hover:ring hover:ring-primary pt-2"} onClick={async () => {
+              const auth = getAuth();
+              const { user } = await signInWithPopup(auth, twitterProvider);
+              console.log({ user })
+              // Generate itinerary and navigate to home page
+              router.push('app')
+            }}>
               <PlatformIcon icon={"Twitter"} />
             </div>
           </div>
-          {/* <SocialButtons include={["Google", "Facebook", "Twitter"]} /> */}
         </div>
       </form>
     </div>
