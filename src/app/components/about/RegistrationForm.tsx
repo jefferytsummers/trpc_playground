@@ -6,7 +6,6 @@ import { z } from "zod";
 import { SocialButtons } from "../common/SocialButtons";
 import { useZodForm } from "@/utils/forms";
 
-
 const registrationFormSchema = z
   .object({
     username: z
@@ -30,7 +29,11 @@ const registrationFormSchema = z
   });
 
 type Registration = z.infer<typeof registrationFormSchema>;
-const initialRegistration: Registration = { username: '', password: '', confirmPassword: ''}
+const initialRegistration: Registration = {
+  username: "",
+  password: "",
+  confirmPassword: "",
+};
 
 export const RegistrationForm = (): JSX.Element => {
   const {
@@ -39,9 +42,9 @@ export const RegistrationForm = (): JSX.Element => {
     formState: { errors },
   } = useZodForm({
     schema: registrationFormSchema,
-    defaultValues: { username: '', password: '', confirmPassword: '' },
-});
-  console.log({ errors })
+    defaultValues: { username: "", password: "", confirmPassword: "" },
+  });
+  console.log({ errors });
   return (
     <div className={clsx("bg-base-100 rounded-lg drop-shadow-lg w-full p-4")}>
       <form
@@ -52,19 +55,19 @@ export const RegistrationForm = (): JSX.Element => {
         <>
           <TextInput
             errorMessage={errors.username?.message}
-            topLeftLabel="Username"
+            topLeftLabel="Username:"
             placeholder="Email address or phone number"
             inputProps={register("username", { required: true })}
           />
           <PasswordInput
             errorMessage={errors.password?.message}
-            topLeftLabel="Password"
+            topLeftLabel="Password:"
             placeholder="*******"
             inputProps={register("password", { required: true })}
           />
           <PasswordInput
             errorMessage={errors.confirmPassword?.message}
-            topLeftLabel="Confirm Password"
+            topLeftLabel="Confirm Password:"
             placeholder="*******"
             inputProps={register("confirmPassword", { required: true })}
           />
@@ -78,7 +81,7 @@ export const RegistrationForm = (): JSX.Element => {
             Register and view!
           </button>
           <div className={clsx("text-lg")}>or register with</div>
-          <SocialButtons include={['Google', 'Facebook', 'Twitter']} />
+          <SocialButtons include={["Google", "Facebook", "Twitter"]} />
         </div>
       </form>
     </div>

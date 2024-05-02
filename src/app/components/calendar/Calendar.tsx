@@ -3,23 +3,56 @@ import clsx from "clsx";
 import { CalendarBlock } from "./CalendarBlock";
 import { CalendarMonth } from "./CalendarMonth";
 import { useState } from "react";
+import { range } from "../../../utils/util";
+export type Month =
+  | "January"
+  | "February"
+  | "March"
+  | "April"
+  | "May"
+  | "June"
+  | "July"
+  | "August"
+  | "September"
+  | "October"
+  | "November"
+  | "December";
+export const months: Month[] = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 export const Calendar = (): JSX.Element => {
+  const now = new Date(Date.now());
   const [selectedDate, setSelectedDate] = useState<number | undefined>(
     undefined,
   );
-  const dates = [23, 24, 25, 26, 27, 28, 29, 30, 1, 2, 3];
+  const [selectedMonth, setSelectedMonth] = useState<Month>(months[now.getMonth()]);
+  const [dateRange, setDateRange] = useState(range(now.getDate(), 11))
   return (
     <div
       className={clsx(
         "justify-center items-center w-80 h-64 bg-base-100 rounded-top-lg drop-shadow-lg",
       )}
     >
-      <CalendarMonth />
+      <CalendarMonth
+        selectedMonth={selectedMonth}
+        setSelectedMonth={setSelectedMonth}
+      />
       <div
         className={clsx("h-48 grid grid-cols-4 grid-rows-3 mx-2 mt-2 gap-2")}
       >
-        {dates.map((date) => (
+        {dateRange.map((date) => (
           <CalendarBlock
             key={date}
             setSelectedDate={setSelectedDate}

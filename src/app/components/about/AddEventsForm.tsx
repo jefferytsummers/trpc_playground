@@ -49,8 +49,6 @@ const addEventFormSchema: ZodType<IAddEventFormInput> = z
     startDate.setMinutes(+startMinutes);
     endDate.setHours(+endHours);
     endDate.setMinutes(+endMinutes);
-    console.log(startDate);
-    console.log(endDate);
     return true;
   });
 

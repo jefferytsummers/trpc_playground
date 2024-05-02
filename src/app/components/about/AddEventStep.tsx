@@ -28,7 +28,7 @@ export const AddEventSteps = (): JSX.Element => {
                 "GoogleDocs",
                 "GoogleSheets",
               ]}
-               readonly
+              readonly
             />
           </div>
         </div>
