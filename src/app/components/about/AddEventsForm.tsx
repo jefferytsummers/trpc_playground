@@ -77,7 +77,7 @@ export const AddEventForm = (): JSX.Element => {
       <form className={clsx("max-h-lvh ")} onSubmit={handleSubmit(onSubmit)}>
         <TextInput
           errorMessage={errors.name?.message}
-          placeholder="Dave's birthday!"
+          placeholder="birthday, reunion, conference, etc."
           topLeftLabel="Event Name:"
           inputProps={register("name", { required: true })}
         />

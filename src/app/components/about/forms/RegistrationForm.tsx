@@ -1,10 +1,12 @@
 import clsx from "clsx";
-import { useForm } from "react-hook-form";
-import { TextInput } from "../form/TextInput";
-import { PasswordInput } from "../form/PasswordInput";
+import { TextInput } from "../../form/TextInput";
+import { PasswordInput } from "../../form/PasswordInput";
 import { z } from "zod";
-import { SocialButtons } from "../common/SocialButtons";
+import { PlatformIcon, SocialButtons } from "../../common/SocialButtons";
 import { useZodForm } from "@/utils/forms";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../../../firebase";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 const registrationFormSchema = z
   .object({
@@ -48,8 +50,13 @@ export const RegistrationForm = (): JSX.Element => {
   return (
     <div className={clsx("bg-base-100 rounded-lg drop-shadow-lg w-full p-4")}>
       <form
-        onSubmit={handleSubmit((data) => {
-          console.log(data);
+        onSubmit={handleSubmit(async ({ username, password }) => {
+          const { user } = await createUserWithEmailAndPassword(
+            auth,
+            username,
+            password,
+          );
+          console.log(user);
         })}
       >
         <>
@@ -81,7 +88,22 @@ export const RegistrationForm = (): JSX.Element => {
             Register and view!
           </button>
           <div className={clsx("text-lg")}>or register with</div>
-          <SocialButtons include={["Google", "Facebook", "Twitter"]} />
+          <div
+            className={clsx(
+              "flex justify-center items-center rounded-lg h-full w-full flex",
+            )}
+          >
+            <div className={"rounded-lg hover:ring hover:ring-primary hover:bg-inherit"}>
+              <PlatformIcon icon={"Google"} />
+            </div>
+            <div className={"rounded-lg hover:ring hover:ring-primary"}>
+              <PlatformIcon icon={"Facebook"} />
+            </div>
+            <div className={"rounded-lg hover:ring hover:ring-primary"}>
+              <PlatformIcon icon={"Twitter"} />
+            </div>
+          </div>
+          {/* <SocialButtons include={["Google", "Facebook", "Twitter"]} /> */}
         </div>
       </form>
     </div>

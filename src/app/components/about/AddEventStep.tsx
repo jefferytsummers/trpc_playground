@@ -15,7 +15,7 @@ export const AddEventSteps = (): JSX.Element => {
         >
           <div
             className={clsx(
-              "flex flex-col gap-4 text-2xl justify-center items-center",
+              "h-full flex flex-col gap-4 text-2xl justify-center items-center",
             )}
           >
             <p>{"lets get some more details..."}</p>

@@ -10,9 +10,15 @@ export const CalendarMonth = ({
   setSelectedMonth: (month: Month) => void;
 }): JSX.Element => {
   return (
-    <select defaultValue={selectedMonth} className="select w-full text-center rounded-b-none border text-xl max-w-xs bg-primary text-primary-content focus:ring">
+    <select
+      defaultValue={selectedMonth}
+      className="select w-full text-center rounded-b-none border text-xl max-w-xs bg-primary text-primary-content focus:ring"
+    >
       {months.map((month) => (
-        <option key={month} onClick={(e) => setSelectedMonth(parseMonth(e.currentTarget.value))}>
+        <option
+          key={month}
+          onClick={(e) => setSelectedMonth(parseMonth(e.currentTarget.value))}
+        >
           {month}
         </option>
       ))}
