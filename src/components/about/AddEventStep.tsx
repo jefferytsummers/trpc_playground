@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import { AddEventForm } from "./AddEventsForm";
 import { SocialButtons } from "../common/SocialButtons";
+import { useFormContext } from "react-hook-form";
 
 export const AddEventSteps = (): JSX.Element => {
   return (

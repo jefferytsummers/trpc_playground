@@ -3,13 +3,13 @@ import RootLayout from "../layout";
 
 const Registered = (): JSX.Element => {
   return (
-    <div className={"flex flex-col w-full justify-center items-center min-h-screen overflow-y-auto"}>
-      <div>
-        registration created successfully!
-      </div>
-      <div>
-        check your email for a verification link!
-      </div>
+    <div
+      className={
+        "flex flex-col w-full justify-center items-center min-h-screen overflow-y-auto"
+      }
+    >
+      <div>registration created successfully!</div>
+      <div>check your email for a verification link!</div>
     </div>
   );
 };

@@ -2,26 +2,24 @@
  *
  * This is an example router, you can delete this file and then update `../pages/api/trpc/[trpc].tsx`
  */
-import { router, publicProcedure } from '../trpc';
-import type { Prisma } from '@prisma/client';
-import { TRPCError } from '@trpc/server';
-import { z } from 'zod';
-import { prisma } from '../prisma';
+import { router, publicProcedure } from "../trpc";
+import { TRPCError } from "@trpc/server";
+import { z } from "zod";
+import { prisma } from "../prisma";
+import { Prisma } from "@prisma/client";
 
 /**
  * Default selector for Post.
  * It's important to always explicitly say which fields you want to return in order to not leak extra information
  * @link https://github.com/prisma/prisma/issues/9353
  */
-const defaultPostSelect = {
-  id: true,
-  title: true,
-  text: true,
-  createdAt: true,
-  updatedAt: true,
-} satisfies Prisma.PostSelect;
 
-export const postRouter = router({
+const defaultItinerarySelect = {
+  id: true,
+  name: true,
+} satisfies Prisma.ItinerarySelect;
+
+export const itineraryRouter = router({
   list: publicProcedure
     .input(
       z.object({
@@ -39,8 +37,8 @@ export const postRouter = router({
       const limit = input.limit ?? 50;
       const { cursor } = input;
 
-      const items = await prisma.post.findMany({
-        select: defaultPostSelect,
+      const items = await prisma.itinerary.findMany({
+        select: defaultItinerarySelect,
         // get an extra item at the end which we'll use as next cursor
         take: limit + 1,
         where: {},
@@ -50,7 +48,7 @@ export const postRouter = router({
             }
           : undefined,
         orderBy: {
-          createdAt: 'desc',
+          name: "asc",
         },
       });
       let nextCursor: typeof cursor | undefined = undefined;
@@ -75,30 +73,29 @@ export const postRouter = router({
     )
     .query(async ({ input }) => {
       const { id } = input;
-      const post = await prisma.post.findUnique({
+      const post = await prisma.itinerary.findUnique({
         where: { id },
-        select: defaultPostSelect,
+        select: defaultItinerarySelect,
       });
       if (!post) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
+          code: "NOT_FOUND",
           message: `No post with id '${id}'`,
         });
       }
       return post;
     }),
-  add: publicProcedure
+  create: publicProcedure
     .input(
       z.object({
         id: z.string().uuid().optional(),
-        title: z.string().min(1).max(32),
-        text: z.string().min(1),
+        name: z.string().min(1).max(32),
       }),
     )
     .mutation(async ({ input }) => {
-      const post = await prisma.post.create({
+      const post = await prisma.itinerary.create({
         data: input,
-        select: defaultPostSelect,
+        select: defaultItinerarySelect,
       });
       return post;
     }),

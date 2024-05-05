@@ -1,19 +1,18 @@
 import clsx from "clsx";
-import { TextInput } from "../../form/TextInput";
-import { PasswordInput } from "../../form/PasswordInput";
 import { z } from "zod";
-import { PlatformIcon } from "../../common/SocialButtons";
 import { useZodForm } from "@/utils/forms";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { getAuth, signInWithPopup } from "firebase/auth";
-import { useRouter } from "next/navigation";
 import {
   auth,
   facebookProvider,
   googleProvider,
   twitterProvider,
-} from "@/firebase";
-import { trpc } from "@/utils/trpc";
+} from "../../../../firebase";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { useRouter } from "next/navigation";
+import { PlatformIcon } from "@/components/common/SocialButtons";
+import { PasswordInput } from "@/components/form/PasswordInput";
+import { TextInput } from "@/components/form/TextInput";
 
 const registrationFormSchema = z
   .object({
@@ -56,8 +55,6 @@ export const RegistrationForm = (): JSX.Element => {
 
   const router = useRouter();
 
-  const createItineraryMutation = trpc.itinerary.create.useMutation();
-
   return (
     <div
       className={clsx(
@@ -72,9 +69,6 @@ export const RegistrationForm = (): JSX.Element => {
               username,
               password,
             );
-            const itinerary = await createItineraryMutation.mutate({
-              name: "test",
-            });
             console.log(user);
             // Generate itinerary and navigate to home page
             router.push("registered");
@@ -106,19 +100,12 @@ export const RegistrationForm = (): JSX.Element => {
             "flex flex-col gap-4 mx-16 justify-center items-center",
           )}
         >
-          <div>
-            <button type="submit" className={clsx("btn btn-primary ")}>
-              Register and view!
-            </button>
-            {createItineraryMutation.error && (
-              <>{createItineraryMutation.error.message}</>
-            )}
-          </div>
+          <button type="submit" className={clsx("btn btn-primary ")}>
+            Register and view!
+          </button>
           <div className={clsx("text-lg")}>or register with</div>
           <div
-            className={clsx(
-              "flex justify-center items-center rounded-lg flex pb-2",
-            )}
+            className={clsx("flex justify-center items-center rounded-lg pb-2")}
           >
             <div
               className={"rounded-lg hover:ring hover:ring-primary pt-2"}

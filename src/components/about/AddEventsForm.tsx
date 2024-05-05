@@ -1,6 +1,6 @@
 "use client";
 import clsx from "clsx";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, useFormContext } from "react-hook-form";
 import { TextInput } from "../form/TextInput";
 import { TimeInput } from "../form/TimeInput";
 import { LinkInput } from "../form/LinkInput";
@@ -53,6 +53,7 @@ const addEventFormSchema: ZodType<IAddEventFormInput> = z
   });
 
 export const AddEventForm = (): JSX.Element => {
+  const {} = useFormContext();
   const {
     register,
     handleSubmit,

@@ -12,5 +12,4 @@ const IndexPage = (): NextPageWithLayout => {
   );
 };
 
-
 export default IndexPage;

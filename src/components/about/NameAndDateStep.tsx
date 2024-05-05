@@ -1,10 +1,16 @@
 import clsx from "clsx";
 import { Calendar } from "../calendar/Calendar";
+import { useFormContext } from "react-hook-form";
 
 export const NameAndDateStep = (): JSX.Element => {
+  const { register } = useFormContext();
   return (
     <>
-      <p className={clsx("max-w-xs sm:max-w-sm text-neutral-content text-xl sm:text-2xl")}>
+      <p
+        className={clsx(
+          "max-w-xs sm:max-w-sm text-neutral-content text-xl sm:text-2xl",
+        )}
+      >
         try it out by creating a bespoke itinerary for your event!
       </p>
       <div
