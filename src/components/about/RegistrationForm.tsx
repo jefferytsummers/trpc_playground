@@ -7,7 +7,7 @@ import {
   facebookProvider,
   googleProvider,
   twitterProvider,
-} from "../../../../firebase";
+} from "../../firebase";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { PlatformIcon } from "@/components/common/SocialButtons";

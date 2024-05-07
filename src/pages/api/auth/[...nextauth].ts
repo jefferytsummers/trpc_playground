@@ -6,10 +6,10 @@ export const authOptions = {
   // Configure one or more authentication providers
   providers: [
     // ...add more providers here
-    GoogleProvider({
-      clientId: googleProvider.providerId,
-      clientSecret: googleProvider.getScopes(),
-    }),
+    // GoogleProvider({
+    //   clientId: googleProvider.providerId,
+    //   clientSecret: googleProvider.getScopes(),
+    // }),
   ],
 };
 

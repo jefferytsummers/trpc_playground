@@ -1,5 +1,5 @@
-import React, { Suspense, useState } from "react";
-import RootLayout from "../layout";
+import { DefaultLayout } from "@/components/DefaultLayout";
+import React, { Suspense } from "react";
 
 const Registered = (): JSX.Element => {
   return (
@@ -15,9 +15,9 @@ const Registered = (): JSX.Element => {
 };
 
 Registered.getLayout = (page: JSX.Element) => (
-  <RootLayout>
+  <DefaultLayout>
     <Suspense fallback={<div>Loading...</div>}>{page}</Suspense>
-  </RootLayout>
+  </DefaultLayout>
 );
 
 export default Registered;

@@ -58,7 +58,7 @@ export const AddEventForm = (): JSX.Element => {
     handleSubmit,
     formState: { errors, isSubmitSuccessful },
   } = useFormContext();
-  const onSubmit: SubmitHandler<IAddEventFormInput> = (data) => {
+  const onSubmit = (data: any) => {
     console.log(data);
     console.log(isSubmitSuccessful);
   };
@@ -71,7 +71,7 @@ export const AddEventForm = (): JSX.Element => {
     >
       <form className={clsx("max-h-lvh ")} onSubmit={handleSubmit(onSubmit)}>
         <TextInput
-          errorMessage={errors?.message}
+          errorMessage={errors.root?.message}
           placeholder="birthday, reunion, conference, etc."
           topLeftLabel="Event Name:"
           inputProps={register("addEvent.name", { required: true })}
@@ -87,12 +87,12 @@ export const AddEventForm = (): JSX.Element => {
           </div>
           <div className={clsx("flex flex-col")}>
             <TimeInput
-              errorMessage={errors.start?.message}
+              errorMessage={errors.root?.message}
               topLeftLabel="Start:"
               inputProps={register("addEvent.start", { required: true })}
             />
             <TimeInput
-              errorMessage={errors.end?.message}
+              errorMessage={errors.root?.message}
               topLeftLabel="End:"
               inputProps={register("addEvent.end", { required: true })}
             />

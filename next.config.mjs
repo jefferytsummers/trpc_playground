@@ -1,6 +1,4 @@
 // @ts-check
-/* eslint-disable @typescript-eslint/no-var-requires */
-import { env } from "./src/server/env.js";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
