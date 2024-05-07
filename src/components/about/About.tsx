@@ -88,6 +88,8 @@ type AddEventInput = z.infer<typeof aboutFormSchema.shape.addEvent>;
 type InviteAttendeesInput = z.infer<
   typeof aboutFormSchema.shape.inviteAttendees
 >;
+type RegistrationInput = z.infer<typeof aboutFormSchema.shape.registration>;
+
 const initialAddEventInput: AddEventInput = {
   name: "",
   start: "",
@@ -97,6 +99,11 @@ const initialAddEventInput: AddEventInput = {
 const initialInviteAttendeesInput: InviteAttendeesInput = {
   attendees: [{ name: "", contactInfo: "" }],
 };
+const initialRegistrationInput: RegistrationInput = {
+  username: "",
+  password: "",
+  confirmPassword: "",
+};
 
 export const About = (): JSX.Element => {
   const query = trpc.appName.useQuery();
@@ -105,6 +112,7 @@ export const About = (): JSX.Element => {
     defaultValues: {
       addEvent: initialAddEventInput,
       inviteAttendees: initialInviteAttendeesInput,
+      registration: initialRegistrationInput,
     },
   });
   return (

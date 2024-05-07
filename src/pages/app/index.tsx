@@ -1,13 +1,14 @@
 import React, { Suspense } from "react";
+import { ItineraryCalendar } from "./components/ItineraryCalendar";
 
 const SaveTheDate = (): JSX.Element => {
   return (
     <div
       className={
-        "flex flex-col w-full justify-center items-center min-h-screen overflow-y-auto"
+        "flex flex-col min-w-screen justify-center items-center min-h-screen border overflow-y-auto"
       }
     >
-      <div>SAVE THE DATE</div>
+      <ItineraryCalendar />
     </div>
   );
 };

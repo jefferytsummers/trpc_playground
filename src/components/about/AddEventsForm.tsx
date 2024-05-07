@@ -53,17 +53,11 @@ const addEventFormSchema: ZodType<IAddEventFormInput> = z
   });
 
 export const AddEventForm = (): JSX.Element => {
-  const {} = useFormContext();
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitSuccessful },
-  } = useForm<IAddEventFormInput>({
-    resolver: zodResolver(addEventFormSchema),
-    defaultValues: {
-      name: undefined,
-    },
-  });
+  } = useFormContext();
   const onSubmit: SubmitHandler<IAddEventFormInput> = (data) => {
     console.log(data);
     console.log(isSubmitSuccessful);
@@ -77,10 +71,10 @@ export const AddEventForm = (): JSX.Element => {
     >
       <form className={clsx("max-h-lvh ")} onSubmit={handleSubmit(onSubmit)}>
         <TextInput
-          errorMessage={errors.name?.message}
+          errorMessage={errors?.message}
           placeholder="birthday, reunion, conference, etc."
           topLeftLabel="Event Name:"
-          inputProps={register("name", { required: true })}
+          inputProps={register("addEvent.name", { required: true })}
         />
         <div className={clsx("flex justify-center items-center gap-4")}>
           {/* barcode */}
@@ -95,18 +89,19 @@ export const AddEventForm = (): JSX.Element => {
             <TimeInput
               errorMessage={errors.start?.message}
               topLeftLabel="Start:"
-              inputProps={register("start", { required: true })}
+              inputProps={register("addEvent.start", { required: true })}
             />
             <TimeInput
               errorMessage={errors.end?.message}
               topLeftLabel="End:"
-              inputProps={register("end", { required: true })}
+              inputProps={register("addEvent.end", { required: true })}
             />
           </div>
         </div>
         <LinkInput
           placeholder="google/facebook/youtube link!"
           topLeftLabel="Anything people should know?"
+          inputProps={register("addEvent.link")}
         />
         <button type="submit" className={clsx("btn btn-primary btn-md")}>
           Add event!
