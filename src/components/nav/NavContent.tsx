@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { About } from "../about/About";
 import { Login } from "../login/Login";
-import { TabName } from "@/pages/types";
+import { TabName } from "@/types";
 
 export const NavContent = ({
   currentTab,

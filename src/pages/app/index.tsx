@@ -1,5 +1,5 @@
-import React, { Suspense } from "react";
-import { ItineraryCalendar } from "./components/ItineraryCalendar";
+import React from "react";
+import ItineraryCalendar from "./components/ItineraryCalendar";
 
 const SaveTheDate = (): JSX.Element => {
   return (

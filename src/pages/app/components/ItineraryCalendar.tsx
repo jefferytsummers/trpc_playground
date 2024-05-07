@@ -9,7 +9,7 @@ const generateViewDates = (startDate: Date): Date[] => {
   return dates;
 };
 
-export const ItineraryCalendar = (): JSX.Element => {
+const ItineraryCalendar = (): JSX.Element => {
   // Need 5 weeks.
   // Start by finding the first date of the current month
   // Date represented by index 0 -> Sun, 1 -> Sat, 2 -> Mon etc.
@@ -80,14 +80,14 @@ export const ItineraryCalendar = (): JSX.Element => {
       <div className={calendarContainerClasses}>
         <div className={clsx("grid grid-cols-7 gap-2 w-full text-primary")}>
           {["S", "M", "T", "W", "T", "F", "S"].map((day) => (
-            <p>{day}</p>
+            <p key={day}>{day}</p>
           ))}
         </div>
         <div className="grid grid-cols-7 grid-rows-5">
           {viewDates.map((date, index) => {
             const itineraryForDate = getItinerary(date);
             return (
-              <div className={dateCellClasses(date, index)}>
+              <div key={date.toISOString()} className={dateCellClasses(date, index)}>
                 <div className={clsx("flex flex-col w-full h-full")}>
                   <div className={clsx("flex")}>{format(date, "dd")}</div>
                   {itineraryForDate ? (
@@ -113,3 +113,5 @@ export const ItineraryCalendar = (): JSX.Element => {
     </div>
   );
 };
+
+export default ItineraryCalendar;
