@@ -9,7 +9,7 @@ const generateViewDates = (startDate: Date): Date[] => {
   return dates;
 };
 
-export const ItineraryCalendar = (): JSX.Element => {
+const ItineraryCalendar = (): JSX.Element => {
   // Need 5 weeks.
   // Start by finding the first date of the current month
   // Date represented by index 0 -> Sun, 1 -> Sat, 2 -> Mon etc.
@@ -113,3 +113,5 @@ export const ItineraryCalendar = (): JSX.Element => {
     </div>
   );
 };
+
+export default ItineraryCalendar;
