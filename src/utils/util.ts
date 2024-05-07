@@ -1,4 +1,4 @@
-import { Month } from "@/app/components/calendar/Calendar";
+import { Month } from "@/components/calendar/Calendar";
 
 export function unwrap<T>(
   value: T | null | undefined,
@@ -66,6 +66,8 @@ export function getMonthNumber(month: Month) {
       return 10;
     case "December":
       return 11;
+    default:
+      return new Date(Date.now()).getMonth();
   }
 }
 
