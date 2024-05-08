@@ -10,7 +10,7 @@ const SaveTheDate = (): JSX.Element => {
   return (
     <div
       className={
-        "border flex flex-col min-w-screen justify-center items-center h-svh overflow-y-auto"
+        "flex flex-col min-w-screen justify-center items-center h-svh overflow-y-auto"
       }
     >
       {loading && (<span className={clsx('loading loading-spinner text-primary')}/>)}

@@ -97,7 +97,7 @@ const ItineraryCalendar = (): JSX.Element => {
                   ) : (
                     <div
                       className={clsx(
-                        "btn btn-primary btn-ghost border text-sm mb-4 flex flex-grow items-center justify-center opacity-0 hover:opacity-100 hover:cursor-pointer",
+                        "btn btn-primary btn-ghost hover:bg-neutral text-sm mb-4 flex flex-grow items-center justify-center opacity-0 hover:opacity-100 hover:cursor-pointer",
                         {
                           invisible: monthStartDate.getMonth() !== date.getMonth(),
                         },
