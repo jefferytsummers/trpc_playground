@@ -9,9 +9,23 @@ const CreateItineraryDialog = ({
   monthStartDate: Date;
 }) => {
   const createItineraryDialogRef = useRef<HTMLDialogElement>(null);
+
   const openCreateItineraryDialog = () => {
     createItineraryDialogRef.current?.show();
   };
+
+  const handleFormClick = (e: React.MouseEvent<HTMLFormElement>) => {
+    if (e.target === e.currentTarget) {
+      createItineraryDialogRef.current?.close();
+    }
+  };
+
+  const handleDialogKeyUp = (e: React.KeyboardEvent<HTMLDialogElement>) => {
+    if (e.key === "Escape") {
+      createItineraryDialogRef.current?.close();
+    }
+  };
+
   return (
     <>
       <button
@@ -28,20 +42,13 @@ const CreateItineraryDialog = ({
       <dialog
         className={clsx("modal hover:cursor-default")}
         ref={createItineraryDialogRef}
+        onKeyUp={handleDialogKeyUp}
       >
         <form
           className={clsx("flex modal-backdrop w-screen h-screen")}
           method="dialog"
           id="create-itinerary-form"
-          onClick={(e) => {
-            console.log(`element id: ${e.currentTarget.id}`);
-            if (e.currentTarget.id !== 'create-itinerary-modal') {
-              console.log({e})
-
-              createItineraryDialogRef.current?.close();
-              e.stopPropagation();
-            }
-          }}
+          onClick={handleFormClick}
         >
           <div
             id={"create-itinerary-modal"}
