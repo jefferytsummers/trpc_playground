@@ -51,7 +51,6 @@ const ItineraryCalendar = (): JSX.Element => {
       "w-40",
       "h-28",
       "text-primary",
-      "hover:cursor-pointer",
       {
         "text-opacity-25 hover:cursor-not-allowed border-opacity-25":
           date.getMonth() !== monthStartDate.getMonth(),
@@ -73,11 +72,11 @@ const ItineraryCalendar = (): JSX.Element => {
     <div className={containerClasses}>
       <div className={clsx("rounded-t-lg flex justify-between items-center text-primary")}>
         <button onClick={previousMonthView} className={clsx('btn btn-ghost btn-primary')}>
-        <svg className={clsx('fill-primary transform rotate-180')} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 12l-8.991 6.228v-2.722c2.54-1.757 5.053-3.506 5.053-3.506s-2.513-1.718-5.053-3.474v-2.722l8.991 6.196zm-6.96 0l-9.04-6.118v3.118h-8v6h8v3.118l9.04-6.118z"/></svg>
+        <svg className={clsx('fill-primary w-full h-full transform rotate-180')} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M24 12l-8.991 6.228v-2.722c2.54-1.757 5.053-3.506 5.053-3.506s-2.513-1.718-5.053-3.474v-2.722l8.991 6.196zm-6.96 0l-9.04-6.118v3.118h-8v6h8v3.118l9.04-6.118z"/></svg>
         </button>
         <p className={headingClasses}>{format(monthStartDate, "MMMM yyyy")}</p>
         <button onClick={nextMonthView} className={clsx('btn btn-ghost btn-primary')}>
-        <svg className={clsx('fill-primary')} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 12l-8.991 6.228v-2.722c2.54-1.757 5.053-3.506 5.053-3.506s-2.513-1.718-5.053-3.474v-2.722l8.991 6.196zm-6.96 0l-9.04-6.118v3.118h-8v6h8v3.118l9.04-6.118z"/></svg>
+        <svg className={clsx('fill-primary w-full h-full')} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M24 12l-8.991 6.228v-2.722c2.54-1.757 5.053-3.506 5.053-3.506s-2.513-1.718-5.053-3.474v-2.722l8.991 6.196zm-6.96 0l-9.04-6.118v3.118h-8v6h8v3.118l9.04-6.118z"/></svg>
         </button>
       </div>
       <div className={calendarContainerClasses}>
@@ -98,7 +97,7 @@ const ItineraryCalendar = (): JSX.Element => {
                   ) : (
                     <div
                       className={clsx(
-                        "btn btn-primary btn-ghost hover:bg-neutral text-sm mb-4 flex flex-grow items-center justify-center opacity-0 hover:opacity-100",
+                        "btn btn-primary btn-ghost hover:bg-neutral text-sm mb-4 flex flex-grow items-center justify-center opacity-0 hover:opacity-100 hover:cursor-pointer",
                         {
                           invisible: monthStartDate.getMonth() !== date.getMonth(),
                         },
