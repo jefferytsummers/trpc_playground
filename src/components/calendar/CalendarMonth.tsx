@@ -12,7 +12,7 @@ export const CalendarMonth = ({
   return (
     <select
       defaultValue={selectedMonth}
-      className="select w-full text-center rounded-b-none border text-xl max-w-xs bg-primary text-primary-content focus:ring"
+      className="select w-full text-center rounded-b-none text-xl max-w-xs bg-primary text-primary-content focus:ring"
     >
       {months.map((month) => (
         <option
