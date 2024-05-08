@@ -1,5 +1,7 @@
 import clsx from "clsx";
-import { format, startOfMonth, addDays, subDays } from "date-fns";
+import { format, startOfMonth, addDays, subDays, addMonths, subMonths } from "date-fns";
+import { useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const generateViewDates = (startDate: Date): Date[] => {
   const dates: Date[] = [];
@@ -14,8 +16,9 @@ const ItineraryCalendar = (): JSX.Element => {
   // Start by finding the first date of the current month
   // Date represented by index 0 -> Sun, 1 -> Sat, 2 -> Mon etc.
   // fetch 35 dates starting with (7- currentDate)
-  const currentDate = new Date();
-  const monthStartDate = startOfMonth(currentDate);
+  const initialDate = new Date();
+  const [currentDate, setCurrentDate] = useState<Date>(initialDate)
+  const [monthStartDate, setMonthStartDate] = useState<Date>(startOfMonth(currentDate));
   const viewDates = generateViewDates(
     subDays(monthStartDate, 6 - monthStartDate.getDay()),
   );
@@ -28,7 +31,7 @@ const ItineraryCalendar = (): JSX.Element => {
     "lg:px-8",
   );
 
-  const headingClasses = clsx("text-4xl", "text-primary", "font-bold", "mb-8");
+  const headingClasses = clsx("text-4xl", 'flex', "text-primary", "font-bold", "my-4");
 
   const calendarContainerClasses = clsx(
     "inline-flex",
@@ -42,62 +45,61 @@ const ItineraryCalendar = (): JSX.Element => {
 
   const dateCellClasses = (date: Date, index: number) =>
     clsx(
-      "flex",
+      "flex rounded-lg border border-primary",
       "items-start",
       "justify-start",
       "w-40",
       "h-28",
-      "p-1",
       "text-primary",
-      "hover:cursor-pointer",
-      "border-primary border-b border-l border-opacity-50",
       {
-        "text-gray-600 hover:cursor-auto border-primary border-b border-l-neutral":
-          date.getMonth() !== currentDate.getMonth() && date.getDate() > 4,
+        "text-opacity-25 hover:cursor-not-allowed border-opacity-25":
+          date.getMonth() !== monthStartDate.getMonth(),
       },
-      {
-        "text-gray-600 hover:cursor-auto border-primary border-l border-b-neutral":
-          date.getMonth() !== currentDate.getMonth() && date.getDate() < 4,
-      },
-      { "border-primary border-r": false },
-      { "border-primary border-b border-l": (35 - index) % 7 === 0 }, // if first element of row, only set bottom border
-      { "border-primary border-r": (35 - index) % 7 === 1 && date.getMonth() === currentDate.getMonth() }, // if first element of row, only set bottom border
-      { "border-primary border-t": date.getMonth() === currentDate.getMonth() && index < 7 }, // if first element of row, only set bottom border
-      { "": index > 27 }, // if on the last row dont set bottom border
     );
 
   const getItinerary = (date: Date) => {
-    return undefined;
+    return true;
   };
+
+  const nextMonthView = () => {
+    setMonthStartDate(addMonths(monthStartDate, 1))
+  }
+  const previousMonthView = () => {
+    setMonthStartDate(subMonths(monthStartDate, 1))
+  }
 
   return (
     <div className={containerClasses}>
-      <div className={clsx("flex justify-between items-center text-primary")}>
-        <div>{"<"}</div>
-        <p className={headingClasses}>{format(currentDate, "MMMM yyyy")}</p>
-        <div>{">"}</div>
+      <div className={clsx("rounded-t-lg flex justify-between items-center text-primary")}>
+        <button onClick={previousMonthView} className={clsx('btn btn-ghost btn-primary')}>
+        <svg className={clsx('fill-primary w-full h-full transform rotate-180')} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M24 12l-8.991 6.228v-2.722c2.54-1.757 5.053-3.506 5.053-3.506s-2.513-1.718-5.053-3.474v-2.722l8.991 6.196zm-6.96 0l-9.04-6.118v3.118h-8v6h8v3.118l9.04-6.118z"/></svg>
+        </button>
+        <p className={headingClasses}>{format(monthStartDate, "MMMM yyyy")}</p>
+        <button onClick={nextMonthView} className={clsx('btn btn-ghost btn-primary')}>
+        <svg className={clsx('fill-primary w-full h-full')} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M24 12l-8.991 6.228v-2.722c2.54-1.757 5.053-3.506 5.053-3.506s-2.513-1.718-5.053-3.474v-2.722l8.991 6.196zm-6.96 0l-9.04-6.118v3.118h-8v6h8v3.118l9.04-6.118z"/></svg>
+        </button>
       </div>
       <div className={calendarContainerClasses}>
-        <div className={clsx("grid grid-cols-7 gap-2 w-full text-primary")}>
-          {["S", "M", "T", "W", "T", "F", "S"].map((day) => (
-            <p key={day}>{day}</p>
+        <div className={clsx("grid grid-cols-7 gap-2 text-primary border-primary border-b ml-2")}>
+          {["S", "M", "T", "W", "T", "F", "S"].map((day, index) => (
+            <p className={clsx('pl-1 mb-1 w-40')} key={index}>{day}</p>
           ))}
         </div>
-        <div className="grid grid-cols-7 grid-rows-5">
+        <div className="grid grid-cols-7 gap-2 grid-rows-5 m-2 pt-2">
           {viewDates.map((date, index) => {
             const itineraryForDate = getItinerary(date);
             return (
               <div key={date.toISOString()} className={dateCellClasses(date, index)}>
                 <div className={clsx("flex flex-col w-full h-full")}>
-                  <div className={clsx("flex")}>{format(date, "dd")}</div>
-                  {itineraryForDate ? (
+                  <div className={clsx("flex ml-1")}>{format(date, "dd")}</div>
+                  {!itineraryForDate ? (
                     <></>
                   ) : (
                     <div
                       className={clsx(
-                        "btn btn-primary btn-outline text-xs flex flex-grow items-center justify-center opacity-0 hover:opacity-100",
+                        "btn btn-primary btn-ghost hover:bg-neutral text-sm mb-4 flex flex-grow items-center justify-center opacity-0 hover:opacity-100 hover:cursor-pointer",
                         {
-                          invisible: currentDate.getMonth() !== date.getMonth(),
+                          invisible: monthStartDate.getMonth() !== date.getMonth(),
                         },
                       )}
                     >
