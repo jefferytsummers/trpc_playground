@@ -10,7 +10,7 @@ import {
 } from "date-fns";
 import { useRef, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { CreateItineraryDialog } from "./CreateItineraryDialog";
+import CreateItineraryDialog from "./CreateItineraryDialog";
 
 const ItineraryCalendar = (): JSX.Element => {
   // Need 5 weeks.

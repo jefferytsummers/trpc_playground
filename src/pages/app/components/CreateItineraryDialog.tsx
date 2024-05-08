@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { useRef } from "react";
 
-export const CreateItineraryDialog = ({
+const CreateItineraryDialog = ({
   date,
   monthStartDate,
 }: {
@@ -89,3 +89,5 @@ export const CreateItineraryDialog = ({
     </>
   );
 };
+
+export default CreateItineraryDialog;
