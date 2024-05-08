@@ -10,17 +10,17 @@ const SaveTheDate = (): JSX.Element => {
   return (
     <div
       className={
-        "flex flex-col min-w-screen justify-center items-center min-h-screen overflow-y-auto"
+        "border flex flex-col min-w-screen justify-center items-center h-svh overflow-y-auto"
       }
     >
       {loading && (<span className={clsx('loading loading-spinner text-primary')}/>)}
       {(authenticated && !loading) && (
-        <div className={clsx('border justify-between flex h-screen w-screen')}>
-          <div className={clsx('border w-12')}>
+        <div className={clsx('justify-between flex h-full w-screen')}>
+          <div className={clsx('ring-primary ring w-12')}>
             {/* Tab component for navigation */}
           </div>
           <ItineraryCalendar />
-          <div className={clsx('border w-12')}>
+          <div className={clsx('ring-primary ring drop-shadow-lg w-12')}>
             {/* Tabs for page options */}
           </div>
         </div>

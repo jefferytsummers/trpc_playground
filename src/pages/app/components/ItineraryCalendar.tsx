@@ -39,7 +39,6 @@ const ItineraryCalendar = (): JSX.Element => {
     "space-y-1",
     "items-start",
     "justify-start",
-    "h-full",
     "w-full",
   );
 
@@ -70,7 +69,7 @@ const ItineraryCalendar = (): JSX.Element => {
 
   return (
     <div className={clsx('')}>
-      <div className={clsx("rounded-t-lg flex justify-between items-center text-primary")}>
+      <div className={clsx(" rounded-t-lg flex justify-between items-center text-primary")}>
         <button onClick={previousMonthView} className={clsx('btn btn-ghost btn-primary')}>
         <svg className={clsx('fill-primary w-full h-full transform rotate-180')} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M24 12l-8.991 6.228v-2.722c2.54-1.757 5.053-3.506 5.053-3.506s-2.513-1.718-5.053-3.474v-2.722l8.991 6.196zm-6.96 0l-9.04-6.118v3.118h-8v6h8v3.118l9.04-6.118z"/></svg>
         </button>
