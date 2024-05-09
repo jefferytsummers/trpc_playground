@@ -1,3 +1,4 @@
+import { TextInput } from "@/components/form/TextInput";
 import clsx from "clsx";
 import { useRef } from "react";
 
@@ -85,10 +86,13 @@ const CreateItineraryDialog = ({
             </div>
             <div
               className={clsx(
-                "flex flex-grow border justify-center items-center text-primary",
+                "flex flex-grow justify-center items-center text-primary",
               )}
             >
-              <div>test</div>
+              <form>
+                <TextInput errorMessage="" topLeftLabel="Name:" placeholder="" />
+                <TextInput errorMessage="" topLeftLabel="Description:" placeholder="" />
+              </form>
             </div>
           </div>
         </form>
