@@ -52,7 +52,7 @@ const addEventFormSchema: ZodType<IAddEventFormInput> = z
     return true;
   });
 
-export const AddEventForm = (): JSX.Element => {
+export const GetStartedAddEventForm = (): JSX.Element => {
   const {
     register,
     handleSubmit,

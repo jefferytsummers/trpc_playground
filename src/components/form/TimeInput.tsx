@@ -16,7 +16,7 @@ export const TimeInput = ({
   errorMessage: string | undefined;
 }): JSX.Element => {
   return (
-    <label className="form-control w-full max-w-xs">
+    <label className="form-control w-26 max-w-xs">
       <div className="label">
         <span className="label-text">{topLeftLabel}</span>
         <span className="label-text-alt">{topRightLabel}</span>
