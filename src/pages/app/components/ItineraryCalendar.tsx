@@ -161,6 +161,14 @@ const ItineraryCalendar = (): JSX.Element => {
           })}
         </div>
       </div>
+<<<<<<< Updated upstream
+=======
+      {dialogOpen && !!selectedDate && (
+        <CreateItineraryDialog
+          handleClose={() => setDialogOpen(false)}
+        />
+      )}
+>>>>>>> Stashed changes
     </div>
   );
 };

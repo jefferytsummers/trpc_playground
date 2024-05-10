@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, UseFormProps } from "react-hook-form";
+import { useForm, useFormContext, UseFormProps } from "react-hook-form";
 import { z } from "zod";
 
 export function useZodForm<TSchema extends z.ZodType>(
@@ -16,4 +16,8 @@ export function useZodForm<TSchema extends z.ZodType>(
   });
 
   return form;
+}
+
+export function useZodFormContext<TSchema extends z.ZodType>() { 
+  return useFormContext<TSchema['_input']>();
 }
