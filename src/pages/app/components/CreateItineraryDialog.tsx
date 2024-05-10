@@ -2,20 +2,24 @@ import React, { useState, useRef } from 'react';
 import clsx from 'clsx';
 import AddNameAndDescriptionForm from './AddNameAndDescriptionForm';
 import AddEventsForm from './AddEventsForm';
+import InviteAttendees from './InviteAttendeesForm';
 
 const CreateItineraryDialog = ({ monthStartDate, date }: { monthStartDate: Date, date: Date }) => {
+  console.log('rendered...')
   const [currentFormIndex, setCurrentFormIndex] = useState(0);
   const createItineraryDialogRef = useRef<HTMLDialogElement>(null);
 
+  const formHeaders = [
+    'Name your itinerary!',
+    'Add events!',
+    'Invite attendees!',
+  ]
+
   const forms = [
     <AddNameAndDescriptionForm key="form1" />,
-    <AddEventsForm key="form2" />
-    // Add more forms as needed
+    <AddEventsForm key="form2" />,
+    <InviteAttendees key="form3" />
   ];
-
-  const openCreateItineraryDialog = () => {
-    createItineraryDialogRef.current?.showModal();
-  };
 
   return (
     <>
@@ -26,7 +30,9 @@ const CreateItineraryDialog = ({ monthStartDate, date }: { monthStartDate: Date,
             invisible: monthStartDate?.getMonth() !== date?.getMonth(),
           }
         )}
-        onClick={openCreateItineraryDialog}
+        onClick={() => {
+          createItineraryDialogRef.current?.showModal();
+        }}
       >
         Add itinerary
       </button>
@@ -52,15 +58,17 @@ const CreateItineraryDialog = ({ monthStartDate, date }: { monthStartDate: Date,
           <div
             id={'create-itinerary-modal'}
             className={clsx(
-              'modal-box flex flex-col gap-2 drop-shadow-md w-full max-w-[60rem] h-full mx-auto my-auto justify-end border'
+              'modal-box flex flex-col gap-2 drop-shadow-md w-full max-w-[60rem] h-full mx-auto my-auto justify-end'
             )}
           >
             <div className={clsx('grid grid-rows-1 grid-cols-3')}>
               <div></div>
               <div className={clsx('justify-self-center sm:text-3xl text-primary')}>
-                Create Itinerary
+                {formHeaders[currentFormIndex]}
               </div>
-              <button className="justify-self-end btn btn-square btn-primary">
+              <button type="button" onClick={() => {
+                createItineraryDialogRef.current?.close();
+              }} className="justify-self-end btn btn-square btn-secondary">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-6 w-6"
@@ -83,18 +91,18 @@ const CreateItineraryDialog = ({ monthStartDate, date }: { monthStartDate: Date,
             >
               {forms[currentFormIndex]}
             </div>
-            <div className={clsx('flex justify-end w-full')}>
-              {currentFormIndex > 0 && (
-                <button
-                  type="button"
-                  className={clsx('btn btn-primary mr-2')}
-                  onClick={() => {
-                    setCurrentFormIndex((prevIndex) => prevIndex - 1);
-                  }}
-                >
-                  Previous
-                </button>
-              )}
+            <div className={clsx('flex justify-between w-full')}>
+              <button
+                type="button"
+                className={clsx('btn btn-primary mr-2', {
+                  'invisible': currentFormIndex === 0,
+                })}
+                onClick={() => {
+                  setCurrentFormIndex((prevIndex) => prevIndex - 1);
+                }}
+              >
+                Previous
+              </button>
               {currentFormIndex < forms.length - 1 && (
                 <button
                   type="button"

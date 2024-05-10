@@ -18,7 +18,9 @@ export default trpcNext.createNextApiHandler({
     if (error.code === "INTERNAL_SERVER_ERROR") {
       // send to bug reporting
       console.error("Something went wrong", error);
+      return;
     }
+    console.log({ error })
   },
   /**
    * @link https://trpc.io/docs/v11/caching#api-response-caching

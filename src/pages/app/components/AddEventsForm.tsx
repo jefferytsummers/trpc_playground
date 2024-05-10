@@ -5,7 +5,7 @@ import clsx from 'clsx';
 
 const AddEventsForm = (): JSX.Element => {
     return (
-        <div className={clsx('grid grid-cols-2 gap-4')}>
+        <div className={clsx('grid grid-cols-2 gap-4 overflow-y-auto')}>
             <div>
                 <div className={clsx('flex justify-between h-10')}>
                     <div>Event 1</div>
