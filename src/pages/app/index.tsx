@@ -1,8 +1,9 @@
-import clsx from "clsx";
+import clsx from 'clsx';
 import React from "react";
 import ItineraryCalendar from "./components/ItineraryCalendar";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "@/firebase";
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '@/firebase'
+
 
 const SaveTheDate = (): JSX.Element => {
   const [user, loading, error] = useAuthState(auth);

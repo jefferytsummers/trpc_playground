@@ -15,6 +15,51 @@ datasource db {
 }
 
 model Itinerary {
-    id    String @id @default(uuid())
-    name  String
+  name      String
+  date      String 
+  id String @unique()
+  events    Event[]
+  attendees Attendee[]
+  @@id([name, date])
+  @@unique([name, date])
+
+  createdAt DateTime
+  createdBy String
+  updatedAt DateTime
+  updatedBy String 
+  deletedAt DateTime?
+  deletedBy String?
 }
+
+model Event {
+  name          String
+  starts        String
+  ends          String
+  itinerary     Itinerary  @relation(fields: [itineraryId], references: [id])
+  itineraryId   String
+  @@unique([name, itineraryId])
+  @@id([name, itineraryId])
+
+  createdAt DateTime
+  createdBy String
+  updatedAt DateTime
+  updatedBy String 
+  deletedAt DateTime?
+  deletedBy String?
+}
+
+model Attendee {
+    name          String
+    email         String
+    itinerary     Itinerary  @relation(fields: [itineraryId], references: [id])
+    itineraryId   String
+    @@unique([itineraryId, email])
+    @@id([itineraryId, email])
+
+    createdAt     DateTime
+    createdBy     String
+    updatedAt     DateTime
+    updatedBy     String 
+    deletedAt     DateTime?
+    deletedBy     String?
+} 

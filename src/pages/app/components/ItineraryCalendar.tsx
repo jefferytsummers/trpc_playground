@@ -90,8 +90,9 @@ const ItineraryCalendar = (): JSX.Element => {
     setMonthStartDate(subMonths(monthStartDate, 1));
   };
 
+
   return (
-    <div className={clsx("")}>
+    <div>
       <div
         className={clsx(
           " rounded-t-lg flex justify-between items-center text-primary",
