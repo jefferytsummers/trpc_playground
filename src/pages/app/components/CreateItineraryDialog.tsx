@@ -46,7 +46,7 @@ const CreateItineraryDialog = ({
         onKeyUp={handleDialogKeyUp}
       >
         <form
-          className={clsx("flex modal-backdrop w-screen h-screen")}
+          className={clsx("flex w-screen h-screen")}
           method="dialog"
           id="create-itinerary-form"
           onClick={handleFormClick}
@@ -54,12 +54,12 @@ const CreateItineraryDialog = ({
           <div
             id={"create-itinerary-modal"}
             className={clsx(
-              "modal-box flex flex-col gap-2 drop-shadow-md w-full max-w-[60rem] h-full mx-auto my-auto",
+              "modal-box flex flex-col gap-2 drop-shadow-md w-full max-w-[60rem] h-full mx-auto my-auto justify-end border",
             )}
           >
             <div
               className={clsx(
-                "grid grid-rows-1 grid-cols-3 justify-items-stretch ",
+                "grid grid-rows-1 grid-cols-3 border",
               )}
             >
               <div></div>
@@ -86,14 +86,19 @@ const CreateItineraryDialog = ({
             </div>
             <div
               className={clsx(
-                "flex flex-grow justify-center items-center text-primary",
+                "flex flex-grow self-center justify-center items-center text-primary border",
               )}
             >
-              <form>
-                <TextInput errorMessage="" topLeftLabel="Name:" placeholder="" />
-                <TextInput errorMessage="" topLeftLabel="Description:" placeholder="" />
+              <form className={clsx('flex flex-col justify-center items-center border w-full h-full')}>
+                <div className={clsx('flex border')}>
+                  <TextInput errorMessage="" topLeftLabel="Name:" placeholder="" />
+                  <TextInput errorMessage="" topLeftLabel="Description:" placeholder="" />
+                </div>
               </form>
             </div>
+                <div className={clsx('flex justify-end w-full border')}>
+                  <button type="submit" className={clsx('btn btn-primary')}>Next</button>
+                </div>
           </div>
         </form>
       </dialog>
