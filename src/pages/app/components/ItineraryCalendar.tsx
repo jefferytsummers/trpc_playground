@@ -87,7 +87,6 @@ const ItineraryCalendar = (): JSX.Element => {
     setMonthStartDate(subMonths(monthStartDate, 1));
   };
 
-
   return (
     <div>
       <div
@@ -147,19 +146,20 @@ const ItineraryCalendar = (): JSX.Element => {
                     <></>
                   ) : (
                     <button
-                    className={clsx(
-                      'btn btn-ghost hover:bg-neutral text-sm mb-4 flex flex-grow items-center justify-center opacity-0 hover:opacity-100 hover:cursor-pointer',
-                      {
-                        invisible: monthStartDate?.getMonth() !== date?.getMonth(),
-                      }
-                    )}
-                    onClick={() => {
-                      setSelectedDate(date);
-                      setDialogOpen(true);
-                    }}
-                  >
-                    Add itinerary
-                  </button>
+                      className={clsx(
+                        "btn btn-ghost hover:bg-neutral text-sm mb-4 flex flex-grow items-center justify-center opacity-0 hover:opacity-100 hover:cursor-pointer",
+                        {
+                          invisible:
+                            monthStartDate?.getMonth() !== date?.getMonth(),
+                        },
+                      )}
+                      onClick={() => {
+                        setSelectedDate(date);
+                        setDialogOpen(true);
+                      }}
+                    >
+                      Add itinerary
+                    </button>
                   )}
                 </div>
               </div>
@@ -167,11 +167,13 @@ const ItineraryCalendar = (): JSX.Element => {
           })}
         </div>
       </div>
-      {(dialogOpen && !!selectedDate) && (<CreateItineraryDialog
-        date={selectedDate}
-        monthStartDate={monthStartDate}
-        handleClose={() => setDialogOpen(false)}
-      />)}
+      {dialogOpen && !!selectedDate && (
+        <CreateItineraryDialog
+          date={selectedDate}
+          monthStartDate={monthStartDate}
+          handleClose={() => setDialogOpen(false)}
+        />
+      )}
     </div>
   );
 };

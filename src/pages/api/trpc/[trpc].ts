@@ -20,7 +20,7 @@ export default trpcNext.createNextApiHandler({
       console.error("Something went wrong", error);
       return;
     }
-    console.log({ error })
+    console.log({ error });
   },
   /**
    * @link https://trpc.io/docs/v11/caching#api-response-caching
