@@ -9,15 +9,12 @@ import {
   endOfMonth,
 } from "date-fns";
 import { useRef, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 import CreateItineraryDialog from "./CreateItineraryDialog";
 
 const ItineraryCalendar = (): JSX.Element => {
-  // Need 5 weeks.
-  // Start by finding the first date of the current month
-  // Date represented by index 0 -> Sun, 1 -> Sat, 2 -> Mon etc.
-  // fetch 35 dates starting with (7- currentDate)
   const initialDate = new Date();
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [monthStartDate, setMonthStartDate] = useState<Date>(
     startOfMonth(initialDate),
   );
@@ -139,7 +136,6 @@ const ItineraryCalendar = (): JSX.Element => {
         <div className="grid grid-cols-7 gap-2 grid-rows-6 m-2 pt-2">
           {viewDates.map((date, index) => {
             const itineraryForDate = getItinerary(date);
-            console.log(date);
             return (
               <div
                 key={date.toISOString()}
@@ -150,10 +146,20 @@ const ItineraryCalendar = (): JSX.Element => {
                   {!itineraryForDate ? (
                     <></>
                   ) : (
-                    <CreateItineraryDialog
-                      date={date}
-                      monthStartDate={monthStartDate}
-                    />
+                    <button
+                    className={clsx(
+                      'btn btn-ghost hover:bg-neutral text-sm mb-4 flex flex-grow items-center justify-center opacity-0 hover:opacity-100 hover:cursor-pointer',
+                      {
+                        invisible: monthStartDate?.getMonth() !== date?.getMonth(),
+                      }
+                    )}
+                    onClick={() => {
+                      setSelectedDate(date);
+                      setDialogOpen(true);
+                    }}
+                  >
+                    Add itinerary
+                  </button>
                   )}
                 </div>
               </div>
@@ -161,6 +167,11 @@ const ItineraryCalendar = (): JSX.Element => {
           })}
         </div>
       </div>
+      {(dialogOpen && !!selectedDate) && (<CreateItineraryDialog
+        date={selectedDate}
+        monthStartDate={monthStartDate}
+        handleClose={() => setDialogOpen(false)}
+      />)}
     </div>
   );
 };
