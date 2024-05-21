@@ -21,6 +21,8 @@ const ItineraryCalendar = (): JSX.Element => {
   const [monthStartDate, setMonthStartDate] = useState<Date>(
     startOfMonth(initialDate),
   );
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const createItineraryDialogRef = useRef<HTMLDialogElement>(null);
 
   const generateViewDates = (startDate: Date): Date[] => {
@@ -147,28 +149,17 @@ const ItineraryCalendar = (): JSX.Element => {
               >
                 <div className={clsx("flex flex-col w-full h-full")}>
                   <div className={clsx("flex ml-1")}>{format(date, "dd")}</div>
-                  {!itineraryForDate ? (
-                    <></>
-                  ) : (
-                    <CreateItineraryDialog
-                      date={date}
-                      monthStartDate={monthStartDate}
-                    />
-                  )}
                 </div>
               </div>
             );
           })}
         </div>
       </div>
-<<<<<<< Updated upstream
-=======
       {dialogOpen && !!selectedDate && (
         <CreateItineraryDialog
           handleClose={() => setDialogOpen(false)}
         />
       )}
->>>>>>> Stashed changes
     </div>
   );
 };
