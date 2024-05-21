@@ -105,7 +105,7 @@ const ItineraryCalendar = (): JSX.Element => {
     <div>
       <div
         className={clsx(
-          " rounded-t-lg flex justify-between items-center text-primary",
+          "rounded-t-lg flex justify-between items-center text-primary",
         )}
       >
         <button

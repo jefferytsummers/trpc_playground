@@ -134,7 +134,7 @@ const CreateItineraryDialog = ({
             <div
               id={'create-itinerary-modal'}
               className={clsx(
-                'modal-box flex flex-col gap-2 drop-shadow-md w-full max-w-[60rem] h-full mx-auto my-auto justify-end border'
+                'modal-box flex flex-col gap-2 drop-shadow-md w-full max-w-[60rem] h-full mx-auto my-auto justify-end'
               )}
             >
               <div className={clsx("grid grid-rows-1 grid-cols-3")}>
