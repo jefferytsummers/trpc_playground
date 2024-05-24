@@ -18,6 +18,6 @@ export function useZodForm<TSchema extends z.ZodType>(
   return form;
 }
 
-export function useZodFormContext<TSchema extends z.ZodType>() { 
-  return useFormContext<TSchema['_input']>();
+export function useZodFormContext<TSchema extends z.ZodType>() {
+  return useFormContext<TSchema["_input"]>();
 }

@@ -94,12 +94,11 @@ const ItineraryCalendar = (): JSX.Element => {
   const handleOpen = (date: Date) => {
     setSelectedDate(date);
     setDialogOpen(true);
-  }
+  };
   const handleClose = () => {
     setSelectedDate(undefined);
     setDialogOpen(false);
-  }
-
+  };
 
   return (
     <div>
@@ -148,8 +147,6 @@ const ItineraryCalendar = (): JSX.Element => {
         </div>
         <div className="grid grid-cols-7 gap-2 grid-rows-6 m-2 pt-2">
           {viewDates.map((date, index) => {
-            const itineraryForDate = getItinerary(date);
-            console.log(date);
             return (
               <div
                 key={date.toISOString()}
@@ -157,10 +154,14 @@ const ItineraryCalendar = (): JSX.Element => {
               >
                 <div className={clsx("flex flex-col w-full h-full")}>
                   <div className={clsx("flex ml-1")}>{format(date, "dd")}</div>
-                  <button 
-                    className={clsx("btn btn-content bg-inherit border-none text-opacity-0 hover:text-opacity-100 text-primary")}
+                  <button
+                    className={clsx(
+                      "btn btn-content bg-inherit border-none text-opacity-0 hover:text-opacity-100 text-primary",
+                    )}
                     onClick={() => handleOpen(date)}
-                    >Add Itinerary</button>
+                  >
+                    Add Itinerary
+                  </button>
                 </div>
               </div>
             );
@@ -168,9 +169,7 @@ const ItineraryCalendar = (): JSX.Element => {
         </div>
       </div>
       {dialogOpen && !!selectedDate && (
-        <CreateItineraryDialog
-          handleClose={handleClose}
-        />
+        <CreateItineraryDialog handleClose={handleClose} />
       )}
     </div>
   );
