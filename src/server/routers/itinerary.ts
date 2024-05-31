@@ -72,30 +72,36 @@ export const itineraryRouter = router({
     )
     .query(async ({ input }) => {
       const { id } = input;
-      const post = await prisma.itinerary.findUnique({
+      const itinerary = await prisma.itinerary.findUnique({
         where: { id },
         select: defaultItinerarySelect,
       });
-      if (!post) {
+      if (!itinerary) {
         throw new TRPCError({
           code: "NOT_FOUND",
-          message: `No post with id '${id}'`,
+          message: `No itinerary with id '${id}'`,
         });
       }
-      return post;
+      return itinerary;
     }),
   create: publicProcedure
     .input(
       z.object({
         id: z.string().uuid().optional(),
         name: z.string().min(1).max(32),
+        description: z.string().min(1).max(64),
+        events: z.array(z.object({
+          name: z.string().min(1).max(64),
+          start: z.string().min(1).max(64),
+          end: z.string().min(1).max(64),
+          links: z.array(z.string().optional())
+        }))
       }),
     )
     .mutation(async ({ input }) => {
-      const post = await prisma.itinerary.create({
-        data: input,
-        select: defaultItinerarySelect,
-      });
-      return post;
+      const itinerary = await prisma.$transaction(async (prisma) => {
+        // await prisma.
+      })
+      return itinerary;
     }),
 });

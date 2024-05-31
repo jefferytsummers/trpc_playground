@@ -4,7 +4,7 @@ import AddNameAndDescriptionForm from "./AddNameAndDescriptionForm";
 import AddEventsForm from "./AddEventsForm";
 import { z } from "zod";
 import { useZodForm } from "@/utils/forms";
-import { FormProvider } from "react-hook-form";
+import { FieldError, FieldErrorsImpl, FormProvider, Merge } from "react-hook-form";
 import InviteAttendeesForm from "./InviteAttendeesForm";
 
 export const createItinerarySchema = z.object({
@@ -17,7 +17,7 @@ export const createItinerarySchema = z.object({
       .string()
       .max(256, "Description cannot exceed 256 characters.")
       .optional(),
-  }),
+  }).refine((fields) => fields.name !== '', 'Please enter a name.'),
   addEvents: z.object({
     events: z.array(
       z.object({
@@ -58,16 +58,13 @@ export const createItinerarySchema = z.object({
           .object({
             email: z
               .string()
-              .refine(
-                (value) => value !== "",
-                "Please add a method of contact.",
-              ),
+              .email('Please enter a valid email address or a valid phone number.'),
             phone: z
               .string()
-              .refine(
-                (value) => value !== "",
-                "Please add a method of contact.",
-              ),
+              .optional()
+              .refine((phone) => {
+
+              })
           })
           .partial()
           .refine(({ email, phone }) => {
@@ -102,6 +99,7 @@ const CreateItineraryDialog = ({
 }: {
   handleClose: () => void;
 }) => {
+  const [createLoading, setCreateLoading] = useState(false);
   const [currentFormIndex, setCurrentFormIndex] = useState(0);
   const createItineraryDialogRef = useRef<HTMLDialogElement>(null);
 
@@ -186,7 +184,7 @@ const CreateItineraryDialog = ({
             </div>
             <div
               className={clsx(
-                "self-center justify-center items-center text-primary w-full h-full overflow-y-auto",
+                "flex justify-center items-center text-primary w-full h-full overflow-y-auto",
               )}
             >
               {forms[currentFormIndex]}
@@ -203,7 +201,7 @@ const CreateItineraryDialog = ({
               >
                 Previous
               </button>
-              {currentFormIndex < forms.length - 1 && (
+              {currentFormIndex <= forms.length - 1 && (
                 <button
                   type="button"
                   className={clsx("btn btn-primary")}
@@ -213,20 +211,44 @@ const CreateItineraryDialog = ({
                       formState: { errors },
                     } = createItineraryFormMethods;
 
-                    const addEventsErrors = [];
+                    type DefinedAddEventsFieldErrors = Merge<FieldError, Merge<FieldError, FieldErrorsImpl<{
+                      name: string;
+                      start: string;
+                      end: string;
+                      link: string;
+                    }>>>[]
+
+                    type DefinedInviteAttendeesFieldErrors = Merge<FieldError, Merge<FieldError, FieldErrorsImpl<{
+                      name: string;
+                      contactInfo: {
+                        email: string | undefined;
+                        phone: string | undefined;
+                      };
+                    }>>>[]
 
                     switch (currentFormIndex) {
                       case 0: {
-                        await trigger("addNameAndDescription.name");
-                        if (!errors.addNameAndDescription?.name?.message) {
+                        await trigger("addNameAndDescription");
+                        if (errors.addNameAndDescription === undefined) {
                           setCurrentFormIndex((prevIndex) => prevIndex + 1);
+                          return;
                         }
+                        console.log({errors: errors.addNameAndDescription})
                         break;
                       }
                       case 1: {
                         await trigger("addEvents.events");
-                        if (!errors.addEvents?.events?.message) {
+                        if (errors.addEvents === undefined) {
                           setCurrentFormIndex((prevIndex) => prevIndex + 1);
+                          return;
+                        }
+                      }
+                      case 2: {
+                        if (errors.inviteAttendees === undefined) {
+                          setCreateLoading(true);
+                          
+                          setCreateLoading(false);
+                          handleClose();
                         }
                       }
                       default:
@@ -234,7 +256,7 @@ const CreateItineraryDialog = ({
                     }
                   }}
                 >
-                  Next
+                  {createLoading ? <span className={clsx('loading loading-dots')} />: currentFormIndex < 2 ? 'Next' : 'Create and send invites!'}
                 </button>
               )}
             </div>

@@ -14,10 +14,10 @@ const AddEventsForm = (): JSX.Element => {
     name: "addEvents.events",
   });
   return (
-    <div className={clsx("grid grid-cols-2 gap-4")}>
+    <div className={clsx("grid grid-cols-2 gap-4 max-h-full w-full")}>
       {fields.map((field, index) => (
-        <div className={clsx("justify-center items-center border")}>
-          <div className={clsx("mx-10 flex justify-between h-10")}>
+        <div key={index} className={clsx("justify-center items-center")}>
+          <div className={clsx('flex w-full justify-between')}>
             <div>{`Event ${index + 1}`}</div>
             <button
               type="button"
@@ -29,10 +29,10 @@ const AddEventsForm = (): JSX.Element => {
           </div>
           <div
             className={clsx(
-              "flex gap-2 h-full  text-neutral-content justify-center items-center",
+              "flex gap-2 h-full text-neutral-content justify-center items-center",
             )}
           >
-            <div className={clsx('h-full')}>
+            <div className={clsx('h-full w-full')}>
               <TextInput
                 placeholder={"reunion, birthday"}
                 errorMessage={

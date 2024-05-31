@@ -33,9 +33,7 @@ export const TextInput = ({
         {...inputProps}
       />
       <div className="label">
-        {errorMessage && (
-          <span className="label-text-alt text-secondary">{`* ${errorMessage}`}</span>
-        )}
+        <span className="label-text-alt text-secondary h-4">{errorMessage ? `* ${errorMessage}` : ' '}</span>
         <span className="label-text-alt">{bottomRightLabel}</span>
       </div>
     </label>

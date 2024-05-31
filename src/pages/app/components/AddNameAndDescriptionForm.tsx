@@ -2,22 +2,24 @@ import { TextInput } from "@/components/form/TextInput";
 import { useZodFormContext } from "@/utils/forms";
 import clsx from "clsx";
 import { createItinerarySchema } from "./CreateItineraryDialog";
+import { useEffect } from "react";
 
 const AddNameAndDescriptionForm = (): JSX.Element => {
   const {
     register,
+    trigger,
     formState: { errors },
   } = useZodFormContext<typeof createItinerarySchema>();
+
+  useEffect(() => {
+    trigger('addNameAndDescription.name');
+  }, [])
+
   return (
-    <form
-      className={clsx(
-        "flex flex-col gap-2 self-center justify-center items-center w-full h-full",
-      )}
-    >
-      <div className={clsx("flex flex-col w-3/5  text-center")}>
+      <div className={clsx("flex flex-col w-3/5 mx-auto my-auto text-center")}>
         {"Let's get a name for the itinerary and add a description"}
         <TextInput
-          errorMessage={errors.addNameAndDescription?.name?.message}
+          errorMessage={errors.addNameAndDescription?.name?.message || errors.addNameAndDescription?.message}
           topLeftLabel="Name:"
           placeholder="Monday Murder Mystery, Dave's Birthday, etc."
           inputProps={register("addNameAndDescription.name")}
@@ -29,7 +31,6 @@ const AddNameAndDescriptionForm = (): JSX.Element => {
           inputProps={register("addNameAndDescription.description")}
         />
       </div>
-    </form>
   );
 };
 
