@@ -15,11 +15,12 @@ datasource db {
 }
 
 model Itinerary {
-  name      String
-  date      String 
-  id String @unique()
-  events    Event[]
-  attendees Attendee[]
+  name        String
+  description String?
+  date        String 
+  id String   @unique()
+  events      Event[]
+  attendees   Attendee[]
   @@id([name, date])
   @@unique([name, date])
 

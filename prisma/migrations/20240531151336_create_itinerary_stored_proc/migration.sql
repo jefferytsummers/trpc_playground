@@ -1,5 +1,5 @@
--- This is an empty migration.
 CREATE FUNCTION create_itinerary(
+  p_date VARCHAR(64),
   p_name VARCHAR(64),
   p_description VARCHAR(256),
   p_event_names VARCHAR(64)[],
@@ -13,19 +13,18 @@ CREATE FUNCTION create_itinerary(
 RETURNS VOID
 AS $$
 DECLARE
-  v_itinerary_id INTEGER;
+  v_itinerary_id VARCHAR(255);
   v_event_count INTEGER := array_length(p_event_names, 1);
   v_attendee_count INTEGER := array_length(p_attendee_names, 1);
   v_index INTEGER;
 BEGIN
   -- Insert the itinerary data into the database
-  INSERT INTO itineraries (name, description)
-  VALUES (p_name, p_description)
+  INSERT INTO "Itinerary" (name, description)
+  VALUES (p_date, p_name, p_description)
   RETURNING id INTO v_itinerary_id;
-
   -- Insert the events data into the database
   FOR v_index IN 1..v_event_count LOOP
-    INSERT INTO events (itinerary_id, name, start_time, end_time, link)
+    INSERT INTO "Event" (itinerary_id, name, starts, ends, link)
     VALUES (
       v_itinerary_id,
       p_event_names[v_index],
@@ -34,18 +33,15 @@ BEGIN
       p_event_links[v_index]
     );
   END LOOP;
-
   -- Insert the attendees data into the database
   FOR v_index IN 1..v_attendee_count LOOP
-    INSERT INTO attendees (itinerary_id, name, email, phone)
+    INSERT INTO "Attendee" (itinerary_id, name, email)
     VALUES (
       v_itinerary_id,
       p_attendee_names[v_index],
-      p_attendee_emails[v_index],
-      p_attendee_phones[v_index]
+      p_attendee_emails[v_index]
     );
   END LOOP;
-
   EXCEPTION
     WHEN OTHERS THEN
       RAISE EXCEPTION 'Error creating itinerary: %', SQLERRM;
