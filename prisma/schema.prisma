@@ -18,7 +18,6 @@ model Itinerary {
   name        String
   description String?
   date        String 
-  id String   @unique()
   events      Event[]
   attendees   Attendee[]
   @@id([name, date])
@@ -36,10 +35,12 @@ model Event {
   name          String
   starts        String
   ends          String
-  itinerary     Itinerary  @relation(fields: [itineraryId], references: [id])
-  itineraryId   String
-  @@unique([name, itineraryId])
-  @@id([name, itineraryId])
+  link          String
+  itinerary     Itinerary  @relation(fields: [itineraryName, itineraryDate], references: [name, date])
+  itineraryName String
+  itineraryDate String
+  @@unique([name, itineraryName, itineraryDate])
+  @@id([name, itineraryName, itineraryDate])
 
   createdAt DateTime
   createdBy String
@@ -52,10 +53,11 @@ model Event {
 model Attendee {
     name          String
     email         String
-    itinerary     Itinerary  @relation(fields: [itineraryId], references: [id])
-    itineraryId   String
-    @@unique([itineraryId, email])
-    @@id([itineraryId, email])
+    itinerary     Itinerary  @relation(fields: [itineraryName, itineraryDate], references: [name, date])
+    itineraryName String
+    itineraryDate String
+    @@unique([itineraryName, itineraryDate, email])
+    @@id([itineraryName, itineraryDate, email])
 
     createdAt     DateTime
     createdBy     String
