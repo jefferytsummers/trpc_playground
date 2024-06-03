@@ -1,8 +1,8 @@
 import clsx from 'clsx';
-import { createItinerarySchema } from "./CreateItineraryDialog";
 import { useZodFormContext } from '@/utils/forms';
 import { TextInput } from '@/components/form/TextInput';
 import { useFieldArray } from 'react-hook-form';
+import { createItinerarySchema } from '@/types';
 
 const InviteAttendeesForm = (): JSX.Element => {
     const { control, register, formState: { errors } } = useZodFormContext<typeof createItinerarySchema>()

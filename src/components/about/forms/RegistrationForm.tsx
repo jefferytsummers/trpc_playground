@@ -72,9 +72,6 @@ export const RegistrationForm = (): JSX.Element => {
               username,
               password,
             );
-            const itinerary = await createItineraryMutation.mutate({
-              name: "test",
-            });
             console.log(user);
             // Generate itinerary and navigate to home page
             router.push("registered");

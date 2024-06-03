@@ -168,7 +168,7 @@ const ItineraryCalendar = (): JSX.Element => {
         </div>
       </div>
       {dialogOpen && !!selectedDate && (
-        <CreateItineraryDialog handleClose={handleClose} />
+        <CreateItineraryDialog date={selectedDate} handleClose={handleClose} />
       )}
     </div>
   );

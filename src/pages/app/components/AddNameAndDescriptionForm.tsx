@@ -1,10 +1,11 @@
 import { TextInput } from "@/components/form/TextInput";
+import { createItinerarySchema } from "@/types";
 import { useZodFormContext } from "@/utils/forms";
 import clsx from "clsx";
-import { createItinerarySchema } from "./CreateItineraryDialog";
+import { format } from "date-fns";
 import { useEffect } from "react";
 
-const AddNameAndDescriptionForm = (): JSX.Element => {
+const AddNameAndDescriptionForm = ({ date }: { date: Date }): JSX.Element => {
   const {
     register,
     trigger,
@@ -30,6 +31,7 @@ const AddNameAndDescriptionForm = (): JSX.Element => {
           placeholder="Let's all gather and play a murder mystery game for Dave's birthday!"
           inputProps={register("addNameAndDescription.description")}
         />
+        <div className={clsx('text-xl text-neutral-content')}>{format(date, "MM/dd/yyyy")}</div>
       </div>
   );
 };

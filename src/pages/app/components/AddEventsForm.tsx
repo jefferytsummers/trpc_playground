@@ -3,8 +3,8 @@ import { LinkInput } from "@/components/form/LinkInput";
 import { TextInput } from "@/components/form/TextInput";
 import { TimeInput } from "@/components/form/TimeInput";
 import { useZodFormContext } from "@/utils/forms";
-import { createItinerarySchema } from "./CreateItineraryDialog";
 import { useFieldArray } from "react-hook-form";
+import { createItinerarySchema } from "@/types";
 
 const AddEventsForm = (): JSX.Element => {
   const { register, control, formState } =

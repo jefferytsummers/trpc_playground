@@ -4,76 +4,10 @@ import AddNameAndDescriptionForm from "./AddNameAndDescriptionForm";
 import AddEventsForm from "./AddEventsForm";
 import { z } from "zod";
 import { useZodForm } from "@/utils/forms";
-import { FieldError, FieldErrorsImpl, FormProvider, Merge } from "react-hook-form";
+import { FormProvider } from "react-hook-form";
 import InviteAttendeesForm from "./InviteAttendeesForm";
-
-export const createItinerarySchema = z.object({
-  addNameAndDescription: z.object({
-    name: z
-      .string()
-      .min(1, "Itinerary name must be greater than 1 character")
-      .max(64, "Itinerary name cannot be greater than 64 characters"),
-    description: z
-      .string()
-      .max(256, "Description cannot exceed 256 characters.")
-      .optional(),
-  }).refine((fields) => fields.name !== '', 'Please enter a name.'),
-  addEvents: z.object({
-    events: z.array(
-      z.object({
-        name: z
-          .string()
-          .min(1, "Event name must be greater than 1 character")
-          .max(64, "Event name cannot be greater than 64 characters"),
-        start: z.string().refine((value) => {
-          if (value.includes(":")) {
-            if (value.split(":").length === 2) {
-              return true;
-            }
-          }
-          return false;
-        }, "Invalid time."),
-        end: z.string().refine((value) => {
-          if (value.includes(":")) {
-            if (value.split(":").length === 2) {
-              return true;
-            }
-          }
-          return false;
-        }, "Invalid time."),
-        link: z.string().refine((value) => {
-          return true;
-        }),
-      }),
-    ),
-  }),
-  inviteAttendees: z.object({
-    attendees: z.array(
-      z.object({
-        name: z
-          .string()
-          .min(1, "Name must be greater than 1 character")
-          .max(64, "Name cannot be greater than 64 characters"),
-        contactInfo: z
-          .object({
-            email: z
-              .string()
-              .email('Please enter a valid email address or a valid phone number.'),
-            phone: z
-              .string()
-              .optional()
-              .refine((phone) => {
-
-              })
-          })
-          .partial()
-          .refine(({ email, phone }) => {
-            return email || phone;
-          }, "Please enter an email address or a phone number."),
-      }),
-    ),
-  }),
-});
+import { createItinerarySchema } from "@/types";
+import { trpc } from "@/utils/trpc";
 
 type AddNameAndDescriptionInput = z.infer<
   typeof createItinerarySchema.shape.addNameAndDescription
@@ -95,13 +29,17 @@ const initialInviteAttendeesInput: InviteAttendeesInput = {
 };
 
 const CreateItineraryDialog = ({
+  date,
   handleClose,
 }: {
+  date: Date,
   handleClose: () => void;
 }) => {
   const [createLoading, setCreateLoading] = useState(false);
   const [currentFormIndex, setCurrentFormIndex] = useState(0);
   const createItineraryDialogRef = useRef<HTMLDialogElement>(null);
+  const createItineraryFormRef = useRef<HTMLFormElement>(null)
+  const createItineraryMutation = trpc.itinerary.create.useMutation();
 
   const createItineraryFormMethods = useZodForm({
     schema: createItinerarySchema,
@@ -120,7 +58,7 @@ const CreateItineraryDialog = ({
   ];
 
   const forms = [
-    <AddNameAndDescriptionForm key="create-itinerary-add-name-and-description" />,
+    <AddNameAndDescriptionForm key="create-itinerary-add-name-and-description" date={date}/>,
     <AddEventsForm key="create-itinerary-add-events" />,
     <InviteAttendeesForm key="create-itinerary-invite-attendees" />,
   ];
@@ -141,6 +79,12 @@ const CreateItineraryDialog = ({
           className={clsx("flex w-screen h-screen")}
           method="dialog"
           id="create-itinerary-form"
+          ref={createItineraryFormRef}
+          onSubmit={createItineraryFormMethods.handleSubmit((data) => {
+            console.log({ data })
+            console.log(createItineraryMutation.mutate({date, userInput: data}))
+            handleClose();
+          })}
           onClick={(e) => {
             if (e.target === createItineraryDialogRef.current) {
               handleClose();
@@ -203,7 +147,7 @@ const CreateItineraryDialog = ({
               </button>
               {currentFormIndex <= forms.length - 1 && (
                 <button
-                  type="button"
+                  type={(currentFormIndex !== 2 && !createItineraryFormMethods.formState.errors.inviteAttendees) ? "button" : "submit"}
                   className={clsx("btn btn-primary")}
                   onClick={async () => {
                     const {
@@ -211,52 +155,41 @@ const CreateItineraryDialog = ({
                       formState: { errors },
                     } = createItineraryFormMethods;
 
-                    type DefinedAddEventsFieldErrors = Merge<FieldError, Merge<FieldError, FieldErrorsImpl<{
-                      name: string;
-                      start: string;
-                      end: string;
-                      link: string;
-                    }>>>[]
-
-                    type DefinedInviteAttendeesFieldErrors = Merge<FieldError, Merge<FieldError, FieldErrorsImpl<{
-                      name: string;
-                      contactInfo: {
-                        email: string | undefined;
-                        phone: string | undefined;
-                      };
-                    }>>>[]
-
                     switch (currentFormIndex) {
                       case 0: {
                         await trigger("addNameAndDescription");
                         if (errors.addNameAndDescription === undefined) {
-                          setCurrentFormIndex((prevIndex) => prevIndex + 1);
-                          return;
+                          setCurrentFormIndex(1);
                         }
-                        console.log({errors: errors.addNameAndDescription})
                         break;
                       }
                       case 1: {
                         await trigger("addEvents.events");
                         if (errors.addEvents === undefined) {
-                          setCurrentFormIndex((prevIndex) => prevIndex + 1);
-                          return;
+                          console.log('Should be here...')
+                          setCurrentFormIndex(2);
                         }
+                        break;
                       }
                       case 2: {
+                        await trigger('inviteAttendees.attendees');
                         if (errors.inviteAttendees === undefined) {
                           setCreateLoading(true);
-                          
+                          console.log('Creating itinerary...')
+                          console.log(createItineraryFormRef.current);
+                          createItineraryFormRef.current?.submit()
+                          console.log('Itinerary created...')
                           setCreateLoading(false);
-                          handleClose();
+                          return;
                         }
+                        break;
                       }
                       default:
                         break;
                     }
                   }}
                 >
-                  {createLoading ? <span className={clsx('loading loading-dots')} />: currentFormIndex < 2 ? 'Next' : 'Create and send invites!'}
+                  {createLoading ? <span className={clsx('loading loading-dots')} /> : currentFormIndex < 2 ? 'Next' : 'Create and send invites!'}
                 </button>
               )}
             </div>

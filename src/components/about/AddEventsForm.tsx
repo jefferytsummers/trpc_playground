@@ -1,56 +1,9 @@
 "use client";
 import clsx from "clsx";
-import { useForm, SubmitHandler, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { TextInput } from "../form/TextInput";
 import { TimeInput } from "../form/TimeInput";
 import { LinkInput } from "../form/LinkInput";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z, ZodType } from "zod";
-
-interface IAddEventFormInput {
-  name: string;
-  start: string;
-  end: string;
-  link: string;
-}
-
-const addEventFormSchema: ZodType<IAddEventFormInput> = z
-  .object({
-    name: z
-      .string()
-      .refine((value) => value !== "", "Please enter a name for the event."),
-    // TODO - refactor these into their own refiners
-    start: z.string().refine((value) => {
-      if (value.includes(":")) {
-        if (value.split(":").length === 2) {
-          return true;
-        }
-      }
-      return false;
-    }, "Invalid time."),
-    end: z.string().refine((value) => {
-      if (value.includes(":")) {
-        if (value.split(":").length === 2) {
-          return true;
-        }
-      }
-      return false;
-    }, "Invalid time."),
-    link: z.string().refine((value) => {
-      return true;
-    }),
-  })
-  .superRefine(({ start, end }) => {
-    const [startHours, startMinutes] = start.split(":");
-    const [endHours, endMinutes] = end.split(":");
-    const startDate = new Date();
-    const endDate = new Date();
-    startDate.setHours(+startHours);
-    startDate.setMinutes(+startMinutes);
-    endDate.setHours(+endHours);
-    endDate.setMinutes(+endMinutes);
-    return true;
-  });
 
 export const GetStartedAddEventForm = (): JSX.Element => {
   const {
