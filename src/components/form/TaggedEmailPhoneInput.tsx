@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-export const TextInput = ({
+const TaggedEmailPhoneInput = ({
   className = undefined,
   bottomRightLabel = undefined,
   topLeftLabel = undefined,
@@ -14,6 +14,7 @@ export const TextInput = ({
   topLeftLabel?: string | undefined;
   topRightLabel?: string | undefined;
   placeholder?: string | undefined;
+  focusOnMount?: boolean;
   inputProps?: React.DetailedHTMLProps<
     React.InputHTMLAttributes<HTMLInputElement>,
     HTMLInputElement
@@ -33,9 +34,13 @@ export const TextInput = ({
         {...inputProps}
       />
       <div className="label">
-        <span className="label-text-alt text-secondary h-4">{errorMessage ? `* ${errorMessage}` : ' '}</span>
+        {errorMessage && (
+          <span className="label-text-alt text-secondary">{`* ${errorMessage}`}</span>
+        )}
         <span className="label-text-alt">{bottomRightLabel}</span>
       </div>
     </label>
   );
 };
+
+export default TaggedEmailPhoneInput;

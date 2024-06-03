@@ -72,9 +72,6 @@ export const RegistrationForm = (): JSX.Element => {
               username,
               password,
             );
-            const itinerary = await createItineraryMutation.mutate({
-              name: "test",
-            });
             console.log(user);
             // Generate itinerary and navigate to home page
             router.push("registered");
@@ -117,7 +114,7 @@ export const RegistrationForm = (): JSX.Element => {
           <div className={clsx("text-lg")}>or register with</div>
           <div
             className={clsx(
-              "flex justify-center items-center rounded-lg flex pb-2",
+              "flex justify-center items-center rounded-lg pb-2",
             )}
           >
             <div

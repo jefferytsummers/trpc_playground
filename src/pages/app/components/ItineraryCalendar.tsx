@@ -9,7 +9,6 @@ import {
   endOfMonth,
 } from "date-fns";
 import { useRef, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 import CreateItineraryDialog from "./CreateItineraryDialog";
 
 const ItineraryCalendar = (): JSX.Element => {
@@ -21,6 +20,8 @@ const ItineraryCalendar = (): JSX.Element => {
   const [monthStartDate, setMonthStartDate] = useState<Date>(
     startOfMonth(initialDate),
   );
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const createItineraryDialogRef = useRef<HTMLDialogElement>(null);
 
   const generateViewDates = (startDate: Date): Date[] => {
@@ -89,13 +90,20 @@ const ItineraryCalendar = (): JSX.Element => {
   const previousMonthView = () => {
     setMonthStartDate(subMonths(monthStartDate, 1));
   };
-
+  const handleOpen = (date: Date) => {
+    setSelectedDate(date);
+    setDialogOpen(true);
+  };
+  const handleClose = () => {
+    setSelectedDate(undefined);
+    setDialogOpen(false);
+  };
 
   return (
     <div>
       <div
         className={clsx(
-          " rounded-t-lg flex justify-between items-center text-primary",
+          "rounded-t-lg flex justify-between items-center text-primary",
         )}
       >
         <button
@@ -138,8 +146,6 @@ const ItineraryCalendar = (): JSX.Element => {
         </div>
         <div className="grid grid-cols-7 gap-2 grid-rows-6 m-2 pt-2">
           {viewDates.map((date, index) => {
-            const itineraryForDate = getItinerary(date);
-            console.log(date);
             return (
               <div
                 key={date.toISOString()}
@@ -147,20 +153,23 @@ const ItineraryCalendar = (): JSX.Element => {
               >
                 <div className={clsx("flex flex-col w-full h-full")}>
                   <div className={clsx("flex ml-1")}>{format(date, "dd")}</div>
-                  {!itineraryForDate ? (
-                    <></>
-                  ) : (
-                    <CreateItineraryDialog
-                      date={date}
-                      monthStartDate={monthStartDate}
-                    />
-                  )}
+                  <button
+                    className={clsx(
+                      "btn btn-content bg-inherit border-none text-opacity-0 hover:text-opacity-100 text-primary",
+                    )}
+                    onClick={() => handleOpen(date)}
+                  >
+                    Add Itinerary
+                  </button>
                 </div>
               </div>
             );
           })}
         </div>
       </div>
+      {dialogOpen && !!selectedDate && (
+        <CreateItineraryDialog date={selectedDate} handleClose={handleClose} />
+      )}
     </div>
   );
 };

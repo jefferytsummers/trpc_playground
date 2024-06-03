@@ -6,7 +6,8 @@ import { router, publicProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { prisma } from "../prisma";
-import { Prisma } from "@prisma/client";
+import { Itinerary, Prisma } from "@prisma/client";
+import { createItinerarySchema } from "@/types";
 
 /**
  * Default selector for Post.
@@ -15,87 +16,57 @@ import { Prisma } from "@prisma/client";
  */
 
 const defaultItinerarySelect = {
-  id: true,
   name: true,
 } satisfies Prisma.ItinerarySelect;
 
 export const itineraryRouter = router({
-  list: publicProcedure
-    .input(
-      z.object({
-        limit: z.number().min(1).max(100).nullish(),
-        cursor: z.string().nullish(),
-      }),
-    )
-    .query(async ({ input }) => {
-      /**
-       * For pagination docs you can have a look here
-       * @link https://trpc.io/docs/v11/useInfiniteQuery
-       * @link https://www.prisma.io/docs/concepts/components/prisma-client/pagination
-       */
-
-      const limit = input.limit ?? 50;
-      const { cursor } = input;
-
-      const items = await prisma.itinerary.findMany({
-        select: defaultItinerarySelect,
-        // get an extra item at the end which we'll use as next cursor
-        take: limit + 1,
-        where: {},
-        cursor: cursor
-          ? {
-              id: cursor,
-            }
-          : undefined,
-        orderBy: {
-          name: "asc",
-        },
-      });
-      let nextCursor: typeof cursor | undefined = undefined;
-      if (items.length > limit) {
-        // Remove the last item and use it as next cursor
-
-        const nextItem = items.pop()!;
-        nextCursor = nextItem.id;
-      }
-
-      return {
-        items: items.reverse(),
-        nextCursor,
-      };
-    }),
-  byId: publicProcedure
-    .input(
-      z.object({
-        id: z.string(),
-      }),
-    )
-    .query(async ({ input }) => {
-      const { id } = input;
-      const post = await prisma.itinerary.findUnique({
-        where: { id },
-        select: defaultItinerarySelect,
-      });
-      if (!post) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: `No post with id '${id}'`,
-        });
-      }
-      return post;
-    }),
   create: publicProcedure
     .input(
       z.object({
-        id: z.string().uuid().optional(),
-        name: z.string().min(1).max(32),
-      }),
+        date: z.date(),
+        userInput: createItinerarySchema,
+      })
     )
-    .mutation(async ({ input }) => {
-      const post = await prisma.itinerary.create({
-        data: input,
+    .mutation(async ({
+      input: {
+        date,
+        userInput: {
+          addNameAndDescription: {
+            name: itineraryName,
+            description: itineraryDescription
+          },
+          addEvents: {
+            events,
+          },
+          inviteAttendees: {
+            attendees,
+          }
+        }
+      }
+    }) => {
+      await prisma.$executeRaw`
+        SELECT create_itinerary(
+          ${date}::TIMESTAMP,
+          ${itineraryName}::VARCHAR(64),
+          ${itineraryDescription}::VARCHAR(256),
+          ARRAY[${events.map(({ name }) => `'${name}'`).join(', ')}]::VARCHAR(64)[],
+          ARRAY[${events.map(({ start }) => `'${start}'`).join(', ')}]::VARCHAR(5)[],
+          ARRAY[${events.map(({ end }) => `'${end}'`).join(', ')}]::VARCHAR(5)[],
+          ARRAY[${events.map(({ link }) => `'${link}'`).join(', ')}]::VARCHAR(255)[],
+          ARRAY[${attendees.map(({ name }) => `'${name}'`).join(', ')}]::VARCHAR(64)[],
+          ARRAY[${attendees.map(({ contactInfo: { email } }) => `'${email}'`).join(', ')}]::VARCHAR(255)[]
+        )
+      `;
+      
+      // Return the created itinerary
+      return prisma.itinerary.findUnique({
+        where: {
+          name_date: {
+            name: itineraryName,
+            date: date.toISOString().slice(0, 10),
+          },
+        },
         select: defaultItinerarySelect,
       });
-      return post;
     }),
 });
