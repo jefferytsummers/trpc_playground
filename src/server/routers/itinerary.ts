@@ -17,7 +17,6 @@ import { createItinerarySchema } from "@/types";
 
 const defaultItinerarySelect = {
   name: true,
-  date: true,
 } satisfies Prisma.ItinerarySelect;
 
 export const itineraryRouter = router({

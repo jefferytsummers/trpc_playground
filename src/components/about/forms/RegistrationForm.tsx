@@ -114,7 +114,7 @@ export const RegistrationForm = (): JSX.Element => {
           <div className={clsx("text-lg")}>or register with</div>
           <div
             className={clsx(
-              "flex justify-center items-center rounded-lg flex pb-2",
+              "flex justify-center items-center rounded-lg pb-2",
             )}
           >
             <div
