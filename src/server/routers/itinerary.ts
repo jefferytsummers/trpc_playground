@@ -16,6 +16,7 @@ import { createItinerarySchema } from "@/types";
 
 const defaultItinerarySelect = {
   name: true,
+  date: true,
 } satisfies Prisma.ItinerarySelect;
 
 export const itineraryRouter = router({
@@ -58,12 +59,10 @@ export const itineraryRouter = router({
       `;
       
       // Return the created itinerary
-      return prisma.itinerary.findUnique({
+      return prisma.itinerary.findFirst({
         where: {
-          name_date: {
             name: itineraryName,
             date: date.toISOString().slice(0, 10),
-          },
         },
         select: defaultItinerarySelect,
       });
