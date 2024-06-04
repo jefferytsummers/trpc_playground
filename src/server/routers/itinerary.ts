@@ -14,10 +14,10 @@ import { createItinerarySchema } from "@/types";
  * @link https://github.com/prisma/prisma/issues/9353
  */
 
-const defaultItinerarySelect: Prisma.ItinerarySelect = {
+const defaultItinerarySelect = {
   name: true,
   date: true,
-};
+} as const satisfies Prisma.ItinerarySelect;
 
 export const itineraryRouter = router({
   create: publicProcedure
