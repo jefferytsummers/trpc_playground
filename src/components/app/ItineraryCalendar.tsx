@@ -153,14 +153,17 @@ const ItineraryCalendar = (): JSX.Element => {
               >
                 <div className={clsx("flex flex-col w-full h-full")}>
                   <div className={clsx("flex ml-1")}>{format(date, "dd")}</div>
-                  <button
+                  {date.getMonth() === monthStartDate.getMonth() && <button
                     className={clsx(
                       "btn btn-content bg-inherit border-none text-opacity-0 hover:text-opacity-100 text-primary",
+                      {
+                        "opacity-0 hover:": date.getMonth() !== monthStartDate.getMonth()
+                      }
                     )}
                     onClick={() => handleOpen(date)}
                   >
                     Add Itinerary
-                  </button>
+                  </button> }
                 </div>
               </div>
             );
