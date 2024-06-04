@@ -17,7 +17,7 @@ datasource db {
 model Itinerary {
   name        String
   description String?
-  date        String 
+  date        DateTime
   events      Event[]
   attendees   Attendee[]
   @@id([name, date])
@@ -38,7 +38,7 @@ model Event {
   link          String
   itinerary     Itinerary  @relation(fields: [itineraryName, itineraryDate], references: [name, date])
   itineraryName String
-  itineraryDate String
+  itineraryDate DateTime
   @@unique([name, itineraryName, itineraryDate])
   @@id([name, itineraryName, itineraryDate])
 
@@ -55,7 +55,7 @@ model Attendee {
     email         String
     itinerary     Itinerary  @relation(fields: [itineraryName, itineraryDate], references: [name, date])
     itineraryName String
-    itineraryDate String
+    itineraryDate DateTime
     @@unique([itineraryName, itineraryDate, email])
     @@id([itineraryName, itineraryDate, email])
 
